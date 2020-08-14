@@ -1,0 +1,134 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+    url('../fonts/OpenSans-Regular.woff2') format('woff2');
+}
+:root {
+  --blue: #3c79b2;
+}
+html {
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+}
+body {
+  min-width: 350px;
+  text-align: center;
+}
+.margin {
+  margin: 15px 30px;
+}
+.small-paragraph {
+  display: block;
+  max-width: 350px;
+  margin: 15px auto;
+}
+a {
+  text-decoration: none;
+  color: var(--blue);
+}
+a:hover {
+  text-decoration: underline;
+}
+hr {
+  margin: 15px 0;
+}
+.btn {
+  text-decoration: none;
+  background-color: transparent;
+  border: 2px solid var(--blue);
+  padding: 5px 35px;
+  color: var(--blue);
+  border-radius: 2px;
+  display: block;
+}
+.loading-outer {
+  width: calc(100% - 4px);
+  height: 20px;
+  border: 2px solid var(--blue);
+  margin: 15px auto;
+  border-radius: 1px;
+}
+.loading-inner {
+  width: 25%;
+  height: calc(100% - 2.3px);
+  background-color: var(--blue);
+  margin: 1px;
+  position: relative;
+  animation: infinite cubic-bezier(0.46, 0.03, 0.52, 0.96) 1.5s loading-bar
+    alternate;
+  border-radius: 1px;
+}
+.thead {
+  font-weight: bold;
+}
+.tr {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px solid black;
+}
+.tr > div {
+  flex: 0 0 50%;
+  padding: 5px 0;
+}
+.tr > div:last-child {
+  border-left: 2px solid black;
+}
+.table {
+  margin: 15px 0;
+  border-collapse: collapse;
+}
+input {
+  text-align: center;
+  border: 2px solid var(--blue);
+  outline: none;
+  border-radius: 2px;
+}
+.input-wrapper {
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+.input-wrapper > * {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 100%;
+}
+.input-wrapper > button,
+.input-wrapper > input {
+  height: 40px;
+}
+.saved {
+  animation: fade_green 2s;
+}
+.failed {
+  animation: fade_red 2s;
+}
+@keyframes fade_green {
+  0%,
+  75% {
+    color: green;
+    border-color: green;
+  }
+  100% {
+    color: initial;
+    border-color: initial;
+  }
+}
+@keyframes fade_red {
+  0%,
+  75% {
+    color: red;
+    border-color: red;
+  }
+  100% {
+    color: initial;
+    border-color: initial;
+  }
+}
+@keyframes loading-bar {
+  from {
+    left: 0;
+  }
+  to {
+    left: calc(75% - 2px);
+  }
+}

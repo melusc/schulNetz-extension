@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculate marks</title>
+    <link href="style/global.css" type="text/css" rel="stylesheet" />
+    <link href="style/normalize.css" type="text/css" rel="stylesheet" />
+    <script type="module" src="script/popup.js"></script>
+  </head>
+  <body>
+    <div class="margin">
+      <div id="settings">
+        <a href="settings.html" class="btn">Open settings</a>
+        <hr />
+      </div>
+
+      <div id="loading-bar">
+        <div class="loading-outer">
+          <div class="loading-inner"></div>
+        </div>
+      </div>
+
+      <div id="logged-out" hidden>
+        <div>You are logged out.</div>
+        <div>Login <a href="settings.html">here</a>.</div>
+      </div>
+
+      <div id="loaded" hidden>
+        <h3>
+          Summary:
+          <div id="summary"></div>
+        </h3>
+
+        <hr />
+
+        <h3>
+          Average:
+          <div id="avg"></div>
+        </h3>
+
+        <hr />
+
+        <h3>
+          Compensate double:
+          <div id="comp-double"></div>
+        </h3>
+
+        <hr />
+
+        <h3>
+          Failing in <span id="amountFailing"></span> course<span
+            id="amountPlural"
+            >s</span
+          >
+        </h3>
+        <div class="table">
+          <div class="thead">
+            <div class="tr">
+              <div>Course</div>
+              <div>Mark</div>
+            </div>
+          </div>
+          <div id="failingBody"></div>
+        </div>
+
+        <h3>All marks</h3>
+        <div>Amount: <span id="amountMarks"></span></div>
+        <div class="table">
+          <div class="thead">
+            <div class="tr">
+              <div>Course</div>
+              <div>Mark</div>
+            </div>
+          </div>
+          <div id="marksBody"></div>
+        </div>
+        <p class="small-paragraph">
+          <small
+            >Although I've tried to make this extension as bug-free as possible,
+            I cannot guarantee the accuracy of the results.</small
+          >
+        </p>
+      </div>
+      <div id="no-marks" hidden>You don't have any marks</div>
+    </div>
+  </body>
+</html>
