@@ -7,12 +7,12 @@ const data = browser.storage.local.get([
   'ignoring',
 ]);
 data.then(vals => {
-  const keys = Object.keys(vals);
+  const keys = Object.entries(vals);
   for (let i = 0; i < keys.length; i++) {
     const [key, val] = keys[i];
-    if (key !== undefined) {
-      document.getElementById(key).value = val;
-    }
+    document.getElementById(key).value = Array.isArray(val)
+      ? val.join(', ')
+      : val;
   }
 });
 
@@ -25,7 +25,8 @@ const checkValidity = () => {
       const url = getVal('url');
       const ignoring = getVal('ignoring')
         .split(',')
-        .map(e => e.trim());
+        .map(e => e.trim())
+        .filter(e => e !== '');
       if (
         password === origPassword &&
         username === origUsername &&
