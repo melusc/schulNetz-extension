@@ -25,7 +25,7 @@ const checkValidity = () => {
       const url = getVal('url');
       const ignoring = getVal('ignoring')
         .split(',')
-        .map(e => e.trim())
+        .map(e => e.trim().toLowerCase())
         .filter(e => e !== '');
       if (
         password === origPassword &&

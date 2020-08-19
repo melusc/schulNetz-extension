@@ -83,11 +83,13 @@ data.then(({ url, password, username, ignoring }) => {
               .filter(e => isFinite(e.children[3].textContent));
 
             const vals = rows
-              .map(e => [
-                e.firstElementChild.lastChild.textContent.trim(),
-                calcMark(e.children[3].textContent),
+              .map(curRow => [
+                curRow.firstElementChild.lastChild.textContent.trim(),
+                calcMark(curRow.children[3].textContent),
               ])
-              .filter(e => ignoring.indexOf(e[0]) === -1);
+              .filter(curRow =>
+                ignoring.every(curIgnore => curIgnore !== curRow)
+              );
 
             if (vals.length <= 0) {
               document.getElementById('no-marks').hidden = false;
