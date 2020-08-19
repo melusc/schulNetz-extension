@@ -88,7 +88,9 @@ data.then(({ url, password, username, ignoring }) => {
                 calcMark(curRow.children[3].textContent),
               ])
               .filter(curRow =>
-                ignoring.every(curIgnore => curIgnore !== curRow)
+                ignoring.every(
+                  curIgnore => curIgnore.toLowerCase() !== curRow.toLowerCase()
+                )
               );
 
             if (vals.length <= 0) {
