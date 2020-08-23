@@ -1,3 +1,6 @@
+document.getElementById('anchor-button').addEventListener('click', () => {
+  open('settings.html', '_self');
+});
 const calcMark = (num = new Error('num is required')) => {
   num = parseFloat(num);
   return Math.round(num * 2) / 2;
@@ -80,16 +83,17 @@ data.then(({ url, password, username, ignoring }) => {
             const rows = [...table.rows]
               .slice(1)
               .filter(e => e.style.display !== 'none')
-              .filter(e => isFinite(e.children[3].textContent));
+              .filter(e => isFinite(e.children[1].textContent));
 
             const vals = rows
               .map(curRow => [
                 curRow.firstElementChild.lastChild.textContent.trim(),
-                calcMark(curRow.children[3].textContent),
+                calcMark(curRow.children[1].textContent),
               ])
               .filter(curRow =>
                 ignoring.every(
-                  curIgnore => curIgnore.toLowerCase() !== curRow.toLowerCase()
+                  curIgnore =>
+                    curIgnore.toLowerCase() !== curRow[0].toLowerCase()
                 )
               );
 

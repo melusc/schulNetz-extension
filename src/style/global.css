@@ -40,6 +40,12 @@ hr {
   color: var(--blue);
   border-radius: 2px;
   display: block;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+}
+.btn:hover {
+  text-decoration: underline;
 }
 .loading-outer {
   width: calc(100% - 4px);
@@ -82,19 +88,17 @@ input {
   border: 2px solid var(--blue);
   outline: none;
   border-radius: 2px;
+  height: 40px;
 }
 .input-wrapper {
   margin-bottom: 12px;
   margin-top: 12px;
 }
-.input-wrapper > * {
+.input-wrapper > *,
+button {
   margin-top: 2px;
   margin-bottom: 2px;
   width: 100%;
-}
-.input-wrapper > button,
-.input-wrapper > input {
-  height: 40px;
 }
 .saved {
   animation: fade_green 2s;

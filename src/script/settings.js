@@ -1,3 +1,6 @@
+document.getElementById('anchor-button').addEventListener('click', () => {
+  open('popup.html', '_self');
+});
 const getVal = str => document.getElementById(str).value;
 
 const data = browser.storage.local.get([
