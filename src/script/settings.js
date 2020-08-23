@@ -3,13 +3,7 @@ document.getElementById('anchor-button').addEventListener('click', () => {
 });
 const getVal = str => document.getElementById(str).value;
 
-const data = browser.storage.local.get([
-  'url',
-  'password',
-  'username',
-  'ignoring',
-]);
-data.then(vals => {
+chrome.storage.local.get(['url', 'password', 'username', 'ignoring'], vals => {
   const keys = Object.entries(vals);
   for (let i = 0; i < keys.length; i++) {
     const [key, val] = keys[i];
@@ -20,8 +14,8 @@ data.then(vals => {
 });
 
 const checkValidity = () => {
-  const data = browser.storage.local.get(['url', 'password', 'username']);
-  data.then(
+  chrome.storage.local.get(
+    ['url', 'password', 'username'],
     ({ password: origPassword, username: origUsername, url: origUrl }) => {
       const password = getVal('password');
       const username = getVal('username');
@@ -35,7 +29,7 @@ const checkValidity = () => {
         username === origUsername &&
         origUrl === url
       ) {
-        browser.storage.local.set({ ignoring });
+        chrome.storage.local.set({ ignoring });
         message(true);
       } else if (password !== '' && username !== '' && ignoring !== '') {
         const loginhash = fetch(
@@ -62,7 +56,7 @@ const checkValidity = () => {
                 const parsed = new DOMParser().parseFromString(e, 'text/html');
                 const anchor = parsed.getElementById('menu21311');
                 if (anchor !== null) {
-                  browser.storage.local.set({
+                  chrome.storage.local.set({
                     url,
                     password,
                     username,
