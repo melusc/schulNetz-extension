@@ -71,14 +71,14 @@ hr {
 .tr {
   display: flex;
   flex-direction: row;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #111;
 }
 .tr > div {
   flex: 0 0 50%;
   padding: 5px 0;
 }
 .tr > div:last-child {
-  border-left: 2px solid black;
+  border-left: 2px solid #111;
 }
 .table {
   margin: 15px 0;
@@ -135,5 +135,19 @@ button {
   }
   to {
     left: calc(75% - 2px);
+  }
+}
+#new-version > a {
+  animation: glow 2s infinite ease-in-out;
+  color: #111;
+}
+@keyframes glow {
+  0%,
+  100% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: 0 0 2px red;
+    color: red;
   }
 }

@@ -180,3 +180,14 @@ chrome.storage.local.get(
     }
   }
 );
+
+fetch('https://api.github.com/repos/melusc/schulnetz-extension/releases/latest')
+  .then(e => e.json())
+  .then(json => {
+    const newVersion = json.tag_name;
+    const oldVersion = browser.runtime.getManifest().version;
+
+    if (newVersion > oldVersion) {
+      document.getElementById('new-version').hidden = false;
+    }
+  });
