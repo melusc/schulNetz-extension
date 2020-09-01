@@ -162,7 +162,7 @@ chrome.storage.local.get(
 
               const summary = document.getElementById('summary');
               const summaryBool =
-                avg >= 4 && compDubEl >= 0 && failingVals.length < 4;
+                avg >= 4 && compDub >= 0 && failingVals.length < 4;
               summary.textContent = summaryBool ? 'Passing' : 'Failing';
               summary.parentNode.style.color = summaryBool ? 'green' : 'red';
 
