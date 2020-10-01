@@ -1,193 +1,247 @@
-document.getElementById('anchor-button').addEventListener('click', () => {
-  open('settings.html', '_self');
-});
-const calcMark = (num = new Error('num is required')) => {
-  num = parseFloat(num);
-  return Math.round(num * 2) / 2;
-};
-class CustomElement {
-  constructor(type, props = {}) {
-    const element = document.createElement(type);
-    const propEntries = Object.entries(props);
-    for (let i = 0; i < propEntries.length; i++) {
-      const [key, val] = propEntries[i];
-      switch (key.toLowerCase()) {
-        case 'textcontent':
-        case 'innerhtml':
-        case 'innertext':
-        case 'value':
-          element[key] = val;
-          break;
-        default:
-          element.setAttribute(key, val);
-          break;
-      }
-    }
-    return element;
+'use strict';
+
+document.getElementById( 'anchor-button' ).addEventListener(
+  'click',
+  () => {
+    open(
+      'settings.html',
+      '_self'
+    );
   }
-}
+);
+const calcMark = ( num = new Error( 'num is required' ) ) => {
+  const parsedNum = parseFloat( num );
+  return Math.round( parsedNum * 2 ) / 2;
+};
+
+/**
+ * Creates a new HTMLElement based on input
+ * @param {string} nodeName The nodename the element should have
+ * @param {object} attributes The attributes the HTMLElement should have
+ * @returns {HTMLElement} The requested HTMLElement
+ */
+const CustomElement = (
+  nodeName, attributes = {}
+) => {
+  const element = document.createElement( nodeName );
+  const propEntries = Object.entries( attributes );
+  for ( let i = 0; i < propEntries.length; i++ ) {
+    const [ key, val ] = propEntries[ i ];
+    switch ( key.toLowerCase() ) {
+      case 'textcontent':
+      case 'innerhtml':
+      case 'innertext':
+        element[ key ] = val;
+        break;
+      default:
+        element.setAttribute(
+          key,
+          val
+        );
+        break;
+    }
+  }
+  return element;
+};
 
 chrome.storage.local.get(
-  ['url', 'password', 'username', 'ignoring'],
-  ({ url, password, username, ignoring }) => {
-    if (url !== undefined && password !== undefined && username !== undefined) {
-      const loginhash = fetch(
-        `https://www.schul-netz.com/${url}/loginto.php?mode=0&lang=`
-      )
-        .then(e => e.text())
-        .then(e => {
-          const parsed = new DOMParser().parseFromString(e, 'text/html');
-          return parsed.querySelector('input[name="loginhash"]');
-        });
+  [ 'url', 'password', 'username', 'ignoring' ],
+  ( { url, password, username, ignoring } ) => {
+    if ( url !== undefined && password !== undefined && username !== undefined ) {
+      const loginhash = fetch( `https://www.schul-netz.com/${ url }/loginto.php?mode=0&lang=` )
+        .then( e => e.text() )
+        .then( e => {
+          const parsed = new DOMParser().parseFromString(
+            e,
+            'text/html'
+          );
+          return parsed.querySelector( 'input[name="loginhash"]' );
+        } );
 
-      const marksLink = loginhash.then(hash => {
-        if (hash !== null) {
-          return fetch(`https://www.schul-netz.com/${url}/index.php?pageid=`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `login=${username}&passwort=${encodeURIComponent(
-              password
-            )}&loginhash=${hash.value}`,
-          })
-            .then(e => e.text())
-            .then(e => {
-              const parsed = new DOMParser().parseFromString(e, 'text/html');
-              const anchor = parsed.getElementById('menu21311');
-              return anchor !== null
-                ? `https://www.schul-netz.com/${url}/${anchor.getAttribute(
-                    'href' // eslint-disable-line
-                  )}` // eslint-disable-line
-                : null;
-            });
-        } else {
-          document.getElementById('loading-bar').hidden = true;
-          document.getElementById('logged-out').hidden = false;
+      const marksLink = loginhash.then( hash => {
+        if ( hash !== null ) {
+          return fetch(
+            `https://www.schul-netz.com/${ url }/index.php?pageid=`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: `login=${ username }&passwort=${ encodeURIComponent( password ) }&loginhash=${ hash.value }`,
+            }
+          )
+            .then( e => e.text() )
+            .then( e => {
+              const parsed = new DOMParser().parseFromString(
+                e,
+                'text/html'
+              );
+              const anchor = parsed.getElementById( 'menu21311' );
+              return anchor === null
+                ? null
+                : `https://www.schul-netz.com/${ url }/${ anchor.getAttribute( 'href' ) }`;
+            } );
         }
-      });
-      marksLink.then(link => {
-        if (link !== null) {
-          fetch(link)
-            .then(e => e.text())
-            .then(e => {
-              const parsed = new DOMParser().parseFromString(e, 'text/html');
-              const table = [...parsed.getElementsByTagName('h3')]
-                .filter(e => /aktuelle noten/i.test(e.textContent))[0]
-                .nextElementSibling.getElementsByTagName('table')[0];
+        document.getElementById( 'loading-bar' ).hidden = true;
+        document.getElementById( 'logged-out' ).hidden = false;
+        return null;
+      } );
+      marksLink?.then( link => {
+        if ( link === null || link === undefined ) {
+          document.getElementById( 'loading-bar' ).hidden = true;
+          document.getElementById( 'logged-out' ).hidden = false;
+        }
+        else {
+          fetch( link )
+            .then( e => e.text() )
+            .then( e => {
+              const parsed = new DOMParser().parseFromString(
+                e,
+                'text/html'
+              );
+              const table = [ ...parsed.getElementsByTagName( 'h3' ) ]
+                .filter( e => ( /aktuelle noten/iu ).test( e.textContent ) )[ 0 ]
+                .nextElementSibling.getElementsByTagName( 'table' )[ 0 ];
 
-              const rows = [...table.rows]
-                .slice(1)
-                .filter(e => e.style.display !== 'none')
-                .filter(e => isFinite(e.children[1].textContent));
+              const rows = [ ...table.rows ]
+                .slice( 1 )
+                .filter( e => e.style.display !== 'none' )
+                .filter( e => isFinite( e.children[ 1 ].textContent ) );
 
               const vals = rows
-                .map(curRow => [
+                .map( curRow => [
                   curRow.firstElementChild.lastChild.textContent.trim(),
-                  calcMark(curRow.children[1].textContent),
-                ])
-                .filter(curRow =>
-                  ignoring.every(
-                    curIgnore =>
-                      curIgnore.toLowerCase() !== curRow[0].toLowerCase()
-                  )
-                );
+                  calcMark( curRow.children[ 1 ].textContent ),
+                ] )
+                .filter( curRow => ignoring.every( curIgnore => curIgnore.toLowerCase() !== curRow[ 0 ].toLowerCase() ) );
 
-              if (vals.length <= 0) {
-                document.getElementById('no-marks').hidden = false;
-                document.getElementById('loading-bar').hidden = true;
+              if ( vals.length <= 0 ) {
+                document.getElementById( 'no-marks' ).hidden = false;
+                document.getElementById( 'loading-bar' ).hidden = true;
                 return;
               }
 
               const avg = vals.reduce(
-                (acc, cur, index) =>
-                  index === vals.length - 1
-                    ? (acc + cur[1]) / vals.length
-                    : acc + cur[1],
+                (
+                  acc, cur, index
+                ) => index === vals.length - 1
+                  ? ( acc + cur[ 1 ] ) / vals.length
+                  : acc + cur[ 1 ],
                 0
               );
-              const avgEl = document.getElementById('avg');
-              avgEl.textContent = avg.toFixed(3);
-              avgEl.parentNode.style.color = avg < 4 ? 'red' : 'green';
+              const avgEl = document.getElementById( 'avg' );
+              avgEl.textContent = avg.toFixed( 3 );
+              avgEl.parentNode.style.color = avg < 4
+                ? 'red'
+                : 'green';
 
               const compDub = vals.reduce(
-                (acc, cur) => acc + (cur[1] - 4) * (cur[1] < 4 ? 2 : 1),
+                (
+                  acc, cur
+                ) => acc + ( ( cur[ 1 ] - 4 ) * ( cur[ 1 ] < 4
+                  ? 2
+                  : 1 ) ),
                 0
               );
 
-              const compDubEl = document.getElementById('comp-double');
+              const compDubEl = document.getElementById( 'comp-double' );
               compDubEl.textContent = compDub;
-              compDubEl.parentNode.style.color = compDub < 0 ? 'red' : 'green';
+              compDubEl.parentNode.style.color = compDub < 0
+                ? 'red'
+                : 'green';
 
-              const failingVals = vals.filter(e => e[1] < 4);
+              const failingVals = vals.filter( e => e[ 1 ] < 4 );
 
-              const amountFailingEl = document.getElementById('amountFailing');
+              const amountFailingEl = document.getElementById( 'amountFailing' );
               amountFailingEl.textContent = failingVals.length;
-              amountFailingEl.parentNode.style.color =
-                failingVals.length > 3 ? 'red' : 'green';
-              document.getElementById('amountPlural').hidden =
-                failingVals.length === 1;
+              amountFailingEl.parentNode.style.color
+                = failingVals.length > 3
+                  ? 'red'
+                  : 'green';
+              document.getElementById( 'amountPlural' ).hidden
+                = failingVals.length === 1;
 
-              if (failingVals.length === 0) {
-                document.getElementById('failingBody').parentNode.hidden = true;
-              } else {
-                const failingBody = document.getElementById('failingBody');
-                for (let i = 0; i < failingVals.length; i++) {
-                  const [name, mark] = failingVals[i];
+              if ( failingVals.length === 0 ) {
+                document.getElementById( 'failingBody' ).parentNode.hidden = true;
+              }
+              else {
+                const failingBody = document.getElementById( 'failingBody' );
+                for ( let i = 0; i < failingVals.length; i++ ) {
+                  const [ name, mark ] = failingVals[ i ];
 
-                  const row = new CustomElement('div', {
-                    class: 'tr',
-                  });
-                  row.append(
-                    new CustomElement('div', { textContent: name }),
-                    new CustomElement('div', { textContent: mark.toFixed(1) })
+                  const row = CustomElement(
+                    'div',
+                    {
+                      class: 'tr',
+                    }
                   );
-                  failingBody.append(row);
+                  row.append(
+                    CustomElement(
+                      'div',
+                      { textContent: name }
+                    ),
+                    CustomElement(
+                      'div',
+                      { textContent: mark.toFixed( 1 ) }
+                    )
+                  );
+                  failingBody.append( row );
                 }
               }
-              const marksBody = document.getElementById('marksBody');
-              for (let i = 0; i < vals.length; i++) {
-                const [name, mark] = vals[i];
+              const marksBody = document.getElementById( 'marksBody' );
+              for ( let i = 0; i < vals.length; i++ ) {
+                const [ name, mark ] = vals[ i ];
 
-                const row = new CustomElement('div', {
-                  class: 'tr',
-                });
-                row.append(
-                  new CustomElement('div', { textContent: name }),
-                  new CustomElement('div', { textContent: mark.toFixed(1) })
+                const row = CustomElement(
+                  'div',
+                  {
+                    class: 'tr',
+                  }
                 );
-                marksBody.append(row);
+                row.append(
+                  CustomElement(
+                    'div',
+                    { textContent: name }
+                  ),
+                  CustomElement(
+                    'div',
+                    { textContent: mark.toFixed( 1 ) }
+                  )
+                );
+                marksBody.append( row );
               }
-              document.getElementById('amountMarks').textContent = vals.length;
+              document.getElementById( 'amountMarks' ).textContent = vals.length;
 
-              const summary = document.getElementById('summary');
-              const summaryBool =
-                avg >= 4 && compDub >= 0 && failingVals.length < 4;
-              summary.textContent = summaryBool ? 'Passing' : 'Failing';
-              summary.parentNode.style.color = summaryBool ? 'green' : 'red';
+              const summary = document.getElementById( 'summary' );
+              const summaryBool
+                = avg >= 4 && compDub >= 0 && failingVals.length < 4;
+              summary.textContent = summaryBool
+                ? 'Passing'
+                : 'Failing';
+              summary.parentNode.style.color = summaryBool
+                ? 'green'
+                : 'red';
 
-              document.getElementById('loading-bar').hidden = true;
-              document.getElementById('loaded').hidden = false;
-            });
-        } else {
-          document.getElementById('loading-bar').hidden = true;
-          document.getElementById('logged-out').hidden = false;
+              document.getElementById( 'loading-bar' ).hidden = true;
+              document.getElementById( 'loaded' ).hidden = false;
+            } );
         }
-      });
-    } else {
-      document.getElementById('loading-bar').hidden = true;
-      document.getElementById('logged-out').hidden = false;
+      } );
+    }
+    else {
+      document.getElementById( 'loading-bar' ).hidden = true;
+      document.getElementById( 'logged-out' ).hidden = false;
     }
   }
 );
 
-fetch('https://api.github.com/repos/melusc/schulnetz-extension/releases/latest')
-  .then(e => e.json())
-  .then(json => {
+fetch( 'https://api.github.com/repos/melusc/schulnetz-extension/releases/latest' )
+  .then( e => e.json() )
+  .then( json => {
     const newVersion = json.tag_name;
     const oldVersion = browser.runtime.getManifest().version;
 
-    if (newVersion > oldVersion) {
-      document.getElementById('new-version').hidden = false;
+    if ( newVersion > oldVersion ) {
+      document.getElementById( 'new-version' ).hidden = false;
     }
-  });
+  } );
