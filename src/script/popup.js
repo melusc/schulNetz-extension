@@ -106,7 +106,10 @@ chrome.storage.local.get(
               const rows = [ ...table.rows ]
                 .slice( 1 )
                 .filter( e => e.style.display !== 'none' )
-                .filter( e => isFinite( e.children[ 1 ].textContent ) );
+                .filter( e => isFinite( parseFloat( e.children[ 1 ].textContent ) ) );
+                // parseFloat because if a mark hasn't been published yet
+                // it will have a *
+                // example: 5.500*
 
               const vals = rows
                 .map( curRow => [
