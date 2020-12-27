@@ -1,3 +1,8 @@
+:root {
+  --red: #ff4136;
+  --green: green;
+}
+
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Regular'), local('OpenSans-Regular'),
@@ -107,11 +112,19 @@ button {
 .failed {
   animation: fade_red 2s;
 }
+
+.failing {
+  color: var(--red);
+}
+.passing {
+  color: var(--green);
+}
+
 @keyframes fade_green {
   0%,
   75% {
-    color: green;
-    border-color: green;
+    color: var(--green);
+    border-color: var(--green);
   }
   100% {
     color: initial;
@@ -121,8 +134,8 @@ button {
 @keyframes fade_red {
   0%,
   75% {
-    color: red;
-    border-color: red;
+    color: var(--red);
+    border-color: var(--red);
   }
   100% {
     color: initial;
@@ -147,7 +160,7 @@ button {
     text-shadow: none;
   }
   50% {
-    text-shadow: 0 0 2px red;
-    color: red;
+    text-shadow: 0 0 2px var(--red);
+    color: var(--red);
   }
 }
