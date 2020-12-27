@@ -8,25 +8,34 @@ const init = () => {
 };
 
 class Main extends Component {
-  state = {
-    page: PAGES.DEFAULT,
-  };
+  constructor() {
+    super();
+    this.state = {
+      page: PAGES.DEFAULT,
+    };
+  }
 
-  setPage = page => this.setState( { page } );
+  setPage( page ) {
+    this.setState( { page } );
+  }
 
-  render = (
+  render(
     _props, { page }
-  ) => html`<${ PAGE_SOURCES[ page ] } setPage=${ this.setPage } />`;
+  ) {
+    return html`<${ PAGE_SOURCES[ page ] } setPage=${ this.setPage } />`;
+  }
 }
 
 class Settings extends Component {
-  state = {
+  constructor() {
+    super();
+    this.state = {};
+  }
 
-  };
-
-  render = (
+  render(
     { setPage }, { username, password, ignoring, url, validSaved }
-  ) => html`
+  ) {
+    return html`
     <div class=margin>
       <div>
         <button class=btn onClick=${ () => setPage( PAGES.DEFAULT ) }>Go back</button>
@@ -61,108 +70,109 @@ class Settings extends Component {
 
       <div class=input-wrapper>
         <button onClick=${ this.checkValidity } class=${
-    `btn${
-      typeof validSaved === 'boolean'
-        ? validSaved
-          ? ' saved'
-          : ' failed'
-        : ''
-    }` }
+  `btn${
+    typeof validSaved === 'boolean'
+      ? validSaved
+        ? ' saved'
+        : ' failed'
+      : ''
+  }` }
     onAnimationEnd=${ () => this.setState( { validSaved: null } ) }
         >
           ${
-            typeof validSaved === 'boolean'
-              ? validSaved
-                ? '✓'
-                : '✗'
-              : 'Saved' }
+  typeof validSaved === 'boolean'
+    ? validSaved
+      ? '✓'
+      : '✗'
+    : 'Saved' }
         </button>
       </div>
     </div>`;
+  }
 
-    handleInput = e => {
-      const { type } = e.target.dataset;
-      if ( type ) {
-        this.setState( { [ type ]: e.target.value.trim() } );
-      }
-    };
+  handleInput( e ) {
+    const { type } = e.target.dataset;
+    if ( type ) {
+      this.setState( { [ type ]: e.target.value.trim() } );
+    }
+  }
 
-    checkValidity = () => {
-      chrome.storage.local.get(
-        [ 'url', 'password', 'username' ],
-        ( { password: origPassword, username: origUsername, url: origUrl } ) => {
-          const { password } = this.state;
-          const url = this.state.url.trim();
-          const username = this.state.username.trim();
-          const ignoring = this.state.ignoring
-            .split( ',' )
-            .map( e => e.trim().toLowerCase() )
-            .filter( e => e );
-          if (
-            password === origPassword
+  checkValidity() {
+    chrome.storage.local.get(
+      [ 'url', 'password', 'username' ],
+      ( { password: origPassword, username: origUsername, url: origUrl } ) => {
+        const { password } = this.state;
+        const url = this.state.url.trim();
+        const username = this.state.username.trim();
+        const ignoring = this.state.ignoring
+          .split( ',' )
+          .map( e => e.trim().toLowerCase() )
+          .filter( e => e );
+        if (
+          password === origPassword
             && username === origUsername
             && origUrl === url
-          ) {
-            chrome.storage.local.set( { ignoring } );
-            this.setState( { validSaved: true } );
-          }
-          else if ( password !== '' && username !== '' && url !== '' ) {
-            const loginhash = fetch( `https://www.schul-netz.com/${ url }/loginto.php?mode=0&lang=` )
-              .then( e => e.text() )
-              .then( e => {
-                const parsed = new DOMParser().parseFromString(
-                  e,
-                  'text/html'
-                );
-                return parsed.querySelector( 'input[name="loginhash"]' );
-              } );
-            loginhash.then( hash => {
-              if ( hash === null ) {
-                this.setState( { validSaved: false } );
-              }
-              else {
-                fetch(
-                  `https://www.schul-netz.com/${ url }/index.php?pageid=`,
-                  {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `login=${ username }&passwort=${ encodeURIComponent( password ) }&loginhash=${ hash.value }`,
-                  }
-                )
-                  .then( e => e.text() )
-                  .then( e => {
-                    const parsed = new DOMParser().parseFromString(
-                      e,
-                      'text/html'
-                    );
-                    const anchor = parsed.getElementById( 'menu21311' );
-                    if ( anchor === null ) {
-                      this.setState( { validSaved: false } );
-                    }
-                    else {
-                      chrome.storage.local.set( {
-                        url,
-                        password,
-                        username,
-                        ignoring,
-                      } );
-
-                      this.setState( { validSaved: true } );
-                    }
-                  } );
-              }
-            } );
-          }
-          else {
-            this.setState( { validSaved: false } );
-          }
+        ) {
+          chrome.storage.local.set( { ignoring } );
+          this.setState( { validSaved: true } );
         }
-      );
-    };
+        else if ( password !== '' && username !== '' && url !== '' ) {
+          const loginhash = fetch( `https://www.schul-netz.com/${ url }/loginto.php?mode=0&lang=` )
+            .then( e => e.text() )
+            .then( e => {
+              const parsed = new DOMParser().parseFromString(
+                e,
+                'text/html'
+              );
+              return parsed.querySelector( 'input[name="loginhash"]' );
+            } );
+          loginhash.then( hash => {
+            if ( hash === null ) {
+              this.setState( { validSaved: false } );
+            }
+            else {
+              fetch(
+                `https://www.schul-netz.com/${ url }/index.php?pageid=`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: `login=${ username }&passwort=${ encodeURIComponent( password ) }&loginhash=${ hash.value }`,
+                }
+              )
+                .then( e => e.text() )
+                .then( e => {
+                  const parsed = new DOMParser().parseFromString(
+                    e,
+                    'text/html'
+                  );
+                  const anchor = parsed.getElementById( 'menu21311' );
+                  if ( anchor === null ) {
+                    this.setState( { validSaved: false } );
+                  }
+                  else {
+                    chrome.storage.local.set( {
+                      url,
+                      password,
+                      username,
+                      ignoring,
+                    } );
 
-  componentDidMount = () => {
+                    this.setState( { validSaved: true } );
+                  }
+                } );
+            }
+          } );
+        }
+        else {
+          this.setState( { validSaved: false } );
+        }
+      }
+    );
+  }
+
+  componentDidMount() {
     chrome.storage.local.get(
       [ 'url', 'password', 'username', 'ignoring' ],
       ( { url, password, username, ignoring = [] } ) => {
@@ -174,18 +184,21 @@ class Settings extends Component {
         } );
       }
     );
-  };
+  }
 }
 
 class Default extends Component {
-  state = {
-    loading: true,
-    loggedOut: false,
-    noMarks: false,
-    newVersion: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+      loggedOut: false,
+      noMarks: false,
+      newVersion: false,
+    };
+  }
 
-  render = (
+  render(
     { setPage }, { loggedOut,
       loading,
       noMarks,
@@ -201,7 +214,8 @@ class Default extends Component {
       amountIsPlural,
       summaryBool,
     }
-  ) => html`
+  ) {
+    return html`
     <div class=margin>
       <div>
         <button class=btn onClick=${ () => setPage( PAGES.SETTINGS ) }>Open settings</button>
@@ -229,9 +243,9 @@ class Default extends Component {
         <div>
           <div>You are logged out.</div>
           <div>Login <a onClick=${
-            () => {
-              setPage( { page: PAGES.SETTINGS } );
-            } }>here</a>.</div>
+  () => {
+    setPage( { page: PAGES.SETTINGS } );
+  } }>here</a>.</div>
         </div>` }
 
       ${ !loading
@@ -239,24 +253,24 @@ class Default extends Component {
         && html`
         <div>
           <h3 class=${
-            summaryBool
-              ? 'passing'
-              : 'failing'
-            }
+  summaryBool
+    ? 'passing'
+    : 'failing'
+}
           >
             Summary:
             <div>${ summaryBool
-              ? 'Passing'
-              : 'Failing' }</div>
+    ? 'Passing'
+    : 'Failing' }</div>
           </h3>
 
            <hr />
 
            <h3 class=${
-            averageFailing
-              ? 'failing'
-              : 'passing'
-            }
+  averageFailing
+    ? 'failing'
+    : 'passing'
+}
           >
             Average:
             <div>${ average }</div>
@@ -265,10 +279,10 @@ class Default extends Component {
            <hr />
 
            <h3 class=${
-            compDubFailing
-              ? 'failing'
-              : 'passing'
-            }
+  compDubFailing
+    ? 'failing'
+    : 'passing'
+}
           >
             Compensate double:
             <div>${ compDub }</div>
@@ -277,15 +291,15 @@ class Default extends Component {
            <hr />
 
            <h3 class=${
-            failingAmountFailing
-              ? 'failing'
-              : 'passing'
-            }
+  failingAmountFailing
+    ? 'failing'
+    : 'passing'
+}
           >
             Failing in ${ failingAmount } course${
-              amountIsPlural
-                ? 's'
-                : '' }
+  amountIsPlural
+    ? 's'
+    : '' }
           </h3>
 
           <${ Table } vals=${ failingVals }/>
@@ -302,8 +316,9 @@ class Default extends Component {
         && html`
           <div>You don't have any marks</div>` }
     </div>`;
+  }
 
-  componentDidMount = () => {
+  componentDidMount() {
     chrome.storage.local.get(
       [ 'url', 'password', 'username', 'ignoring' ],
       ( { url, password, username, ignoring = [] } ) => {
@@ -445,7 +460,7 @@ class Default extends Component {
         }
       }
     );
-  };
+  }
 }
 
 const Table = ( { vals } ) => Array.isArray( vals )

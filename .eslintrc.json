@@ -59,7 +59,7 @@
         "allowSingleLine": true
       }
     ],
-    "class-methods-use-this": "error",
+    // "class-methods-use-this": "error",
     "comma-dangle": [
       "error",
       {
