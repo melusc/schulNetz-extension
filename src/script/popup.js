@@ -13,6 +13,7 @@ class Main extends Component {
     this.state = {
       page: PAGES.DEFAULT,
     };
+    this.setPage = this.setPage.bind( this );
   }
 
   setPage( page ) {
@@ -30,6 +31,8 @@ class Settings extends Component {
   constructor() {
     super();
     this.state = {};
+    this.handleInput = this.handleInput.bind( this );
+    this.checkValidity = this.checkValidity.bind( this );
   }
 
   render(
@@ -218,7 +221,7 @@ class Default extends Component {
     return html`
     <div class=margin>
       <div>
-        <button class=btn onClick=${ () => setPage( PAGES.SETTINGS ) }>Open settings</button>
+        <button class=btn onClick=${ () => { setPage( PAGES.SETTINGS ); } }>Open settings</button>
         <hr />
       </div>
 
@@ -227,6 +230,7 @@ class Default extends Component {
           <div id=new-version>
             <a
               href=https://github.com/melusc/schulNetz-extension/releases/latest
+              rel="noopener noreferrer"
             >
               New version available
             </a>
@@ -242,10 +246,7 @@ class Default extends Component {
         && html`
         <div>
           <div>You are logged out.</div>
-          <div>Login <a onClick=${
-  () => {
-    setPage( { page: PAGES.SETTINGS } );
-  } }>here</a>.</div>
+          <div>Login <a href=# onClick=${ () => { setPage( PAGES.SETTINGS ); } }>here</a>.</div>
         </div>` }
 
       ${ !loading
