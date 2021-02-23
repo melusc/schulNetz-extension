@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "xo src/script/popup.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +14,9 @@
     "@babel/eslint-plugin": "^7.12.13",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "eslint": "^7.20.0",
-    "eslint-plugin-babel": "^5.3.1",
-    "prettier": "^2.1.2"
-  }
+    "eslint-plugin-unicorn": "^28.0.2",
+    "prettier": "^2.1.2",
+    "xo": "^0.38.1"
+  },
+  "dependencies": {}
 }

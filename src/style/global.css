@@ -14,11 +14,13 @@
 html {
   background-color: white;
   font-family: 'Open Sans', sans-serif;
+  scrollbar-width: thin;
 }
 body {
   min-width: 350px;
   text-align: center;
   font-size: 16px;
+  scrollbar-width: thin;
 }
 h3 {
   font-weight: 500;
