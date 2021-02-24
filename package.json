@@ -1,22 +1,40 @@
 {
-  "name": "schulnetz_2020-10-01",
-  "version": "2020.10.01",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "xo src/script/popup.js"
-  },
   "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.13.7",
+    "preact": "^10.5.12",
+    "preact-router": "^3.2.1"
+  },
+  "description": "",
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@babel/eslint-plugin": "^7.12.13",
+    "@babel/core": "^7.13.1",
+    "@babel/eslint-parser": "^7.13.4",
+    "@babel/eslint-plugin": "^7.13.0",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@babel/plugin-transform-runtime": "^7.13.7",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.20.0",
+    "eslint-config-preact": "^1.1.3",
+    "eslint-config-xo-react": "^0.24.0",
     "eslint-plugin-unicorn": "^28.0.2",
     "prettier": "^2.1.2",
+    "terser-webpack-plugin": "^5.1.1",
+    "webpack": "^5.24.1",
+    "webpack-cli": "^4.5.0",
     "xo": "^0.38.1"
   },
-  "dependencies": {}
+  "license": "ISC",
+  "main": "index.js",
+  "name": "schulnetz_2020-10-01",
+  "scripts": {
+    "build": "npm run test && npm run webpack",
+    "test": "xo src/script/",
+    "webpack": "webpack -c production.config.js",
+    "webpack:w": "webpack -c production.config.js -w"
+  },
+  "sideEffects": false,
+  "version": "2020.10.01"
 }

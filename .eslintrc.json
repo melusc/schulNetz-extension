@@ -3,14 +3,29 @@
     "browser": true,
     "es2020": true
   },
-  "extends": ["eslint:recommended"],
-  "globals": { "chrome": false },
+  "extends": ["preact", "eslint:recommended"],
+  "globals": {
+    "chrome": false
+  },
+  "overrides": [
+    {
+      "env": {
+        "es2020": true,
+        "node": true
+      },
+      "files": ["./*.js"],
+      "rules": {
+        "camelcase": "off"
+      }
+    }
+  ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 11
+    "ecmaVersion": 11,
+    "sourceType": "module"
   },
-  "plugins": ["@babel", "unicorn"],
+  "plugins": ["unicorn", "@babel"],
+  "root": true,
   "rules": {
     "@babel/no-invalid-this": "error",
     "@babel/no-unused-expressions": [
@@ -202,6 +217,14 @@
     "operator-assignment": ["error", "always"],
     "operator-linebreak": ["error", "before"],
     "padded-blocks": ["error", "never"],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": "multiline-block-like"
+      }
+    ],
     "prefer-arrow-callback": "error",
     "prefer-const": [
       "error",

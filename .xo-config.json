@@ -1,5 +1,6 @@
 {
   "envs": ["browser", "es2020", "greasemonkey"],
+  "extends": ["preact", "xo-react"],
   "globals": ["GM_addValueChangeListener", "GM_notification", "chrome"],
   "overrides": [
     {
@@ -13,7 +14,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@babel"],
   "rules": {
-    "unicorn/filename-case": "off",
     "@babel/no-invalid-this": "error",
     "@babel/no-unused-expressions": [
       "error",
@@ -77,8 +77,30 @@
         "avoidEscape": true
       }
     ],
+    "react/jsx-closing-bracket-location": "off",
+    "react/jsx-closing-tag-location": "off",
+    "react/jsx-curly-newline": "off",
+    "react/jsx-indent": "off",
+    "react/jsx-indent-props": "off",
+    "react/jsx-sort-props": "off",
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "beforeClosing": "never"
+      }
+    ],
+    "react/jsx-wrap-multilines": "off",
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": ["class", "stroke-linecap", "stroke-linejoin", "stroke-width"]
+      }
+    ],
+    "react/no-unused-state": "off",
+    "react/prop-types": "off",
     "space-in-parens": ["error", "always"],
     "template-curly-spacing": ["error", "always"],
+    "unicorn/filename-case": "off",
     "unicorn/no-nested-ternary": "off",
     "unicorn/no-null": "error"
   }
