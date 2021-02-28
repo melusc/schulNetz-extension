@@ -10,7 +10,7 @@ const login = async ( { url, username, password } ) => {
   }
 
   const loginHashText = await loginhashRequest.text();
-  console.log( loginHashText );
+
   const loginhash = new DOMParser()
     .parseFromString(
       loginHashText,
@@ -44,7 +44,7 @@ const login = async ( { url, username, password } ) => {
   }
 
   const marksPageURL = new URL( marksPageRequest.url );
-  console.log( marksPageURL );
+
   if ( marksPageURL.pathname !== `/${ url }/index.php` ) {
     throw new Error( ERRORS.INCORRECT_CREDS );
   }
@@ -57,6 +57,18 @@ const login = async ( { url, username, password } ) => {
   const marksTable = [ ...parsedMarksPage.querySelectorAll( 'h3' ) ]
     .find( element => ( /aktuelle noten/i ).test( element.textContent ) )
     .nextElementSibling.querySelector( 'table' );
+
+  const logoutURL = parsedMarksPage.querySelector( 'a[href^="index.php?pageid=9999"]' )?.getAttribute?.( 'href' );
+
+  if ( logoutURL ) {
+    const fullLogoutURL = `https://www.schul-netz.com/${ url }/${ logoutURL }`;
+    await fetch(
+      fullLogoutURL,
+      {
+        method: 'HEAD',
+      }
+    );
+  }
 
   return [ ...marksTable.rows ]
     .slice( 1 )

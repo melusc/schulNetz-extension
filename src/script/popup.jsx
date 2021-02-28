@@ -400,8 +400,6 @@ class Default extends Component {
                 || failingAmountFailing
               );
 
-              console.log( 'not failed' );
-
               this.setState( {
                 average,
                 averageFailing,
@@ -417,11 +415,6 @@ class Default extends Component {
               } );
             } )
             .catch( error => {
-              console.log(
-                error,
-                '1'
-              );
-
               if ( error.message === ERRORS.INCORRECT_CREDS ) {
                 this.setState( { loggedOut: true, loading: false } );
               }
