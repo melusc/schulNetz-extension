@@ -1,2 +1,5 @@
 node_modules
 .cache
+web-ext-artifacts
+.env
+.web-extension-id
