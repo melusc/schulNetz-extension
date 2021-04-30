@@ -43,6 +43,8 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               plugins: [
+                // Mozilla addon validator doesn't support class properties yet
+                // so leave this for now
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-transform-runtime',
                 [
