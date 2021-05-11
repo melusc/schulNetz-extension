@@ -1,64 +1,53 @@
-const path = require( 'path' );
-// const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
-const TerserPlugin = require( 'terser-webpack-plugin' );
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/script/popup.jsx',
-  output: {
-    path: path.resolve(
-      __dirname,
-      'dist/script'
-    ),
-    filename: 'popup.js',
+  entry: {
+    popup: './src/script/popup.tsx'
   },
-  //  plugins: [ new CleanWebpackPlugin() ],
+  output: {
+    clean: true,
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist/script')
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css']
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public',
+          to: '..'
+        }
+      ]
+    })
+  ],
   cache: {
     type: 'filesystem',
-    cacheDirectory: path.resolve(
-      __dirname,
-      '.cache'
-    ),
-    buildDependencies: { config: [ __filename ] },
+    cacheDirectory: path.resolve(__dirname, '.cache'),
+    buildDependencies: {config: [__filename]}
   },
   optimization: {
     usedExports: true,
     minimize: true,
     minimizer: [
-      new TerserPlugin( {
+      new TerserPlugin({
         terserOptions: {
           compress: false,
-          mangle: false,
-        },
-      } ),
-    ],
+          mangle: false
+        }
+      })
+    ]
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                // Mozilla addon validator doesn't support class properties yet
-                // so leave this for now
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-transform-runtime',
-                [
-                  '@babel/plugin-transform-react-jsx',
-                  {
-                    pragma: 'h',
-                    pragmaFrag: 'Fragment',
-                  },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
+        test: /\.tsx?$/,
+        use: ['ts-loader']
+      }
+    ]
+  }
 };

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "noUnusedParameters": true,
+    "stripInternal": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "strict": true,
+    "target": "ES2020"
+  }
+}
