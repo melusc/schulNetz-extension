@@ -1,9 +1,8 @@
 import {render, h, Component, Fragment} from 'preact';
 import {route, Router} from 'preact-router';
+import {calculate} from './calculate';
 import login, {ERRORS} from './login';
-
-let counter = 0;
-const uniqueId = () => `${counter++}`;
+import type {SettingsState, DefaultState, TableRow} from './popup.d';
 
 const Main = () => (
   <Router>
@@ -12,15 +11,6 @@ const Main = () => (
     <Settings path="/settings" />
   </Router>
 );
-
-type SettingsState = {
-  username?: string;
-  password?: string;
-  ignoring?: string;
-  url?: string;
-  validSaved?: boolean;
-  errorMsg?: Error | string;
-};
 
 class Settings extends Component {
   state: SettingsState = {};
@@ -160,7 +150,7 @@ class Settings extends Component {
         const ignoring = state.ignoring
           .split(',')
           .map(item => item.trim().toLowerCase())
-          .filter(item => item); // Remove empty strings
+          .filter(item => item !== '');
 
         if (
           password === origPassword &&
@@ -218,46 +208,6 @@ class Settings extends Component {
     );
   };
 }
-
-type TableRow = {
-  courseName: string;
-  mark: number;
-  key: string;
-};
-
-type DefaultState = (
-  | {
-    loading: true;
-    average?: undefined;
-    averageFailing?: undefined;
-    compDub?: undefined;
-    compDubFailing?: undefined;
-    failingAmount?: undefined;
-    failingAmountFailing?: undefined;
-    vals?: undefined;
-    failingVals?: undefined;
-    amountIsPlural?: undefined;
-    currentlyFailing?: undefined;
-  }
-  | {
-    loading: false;
-    average: string;
-    averageFailing: boolean;
-    compDub: number;
-    compDubFailing: boolean;
-    failingAmount: number;
-    failingAmountFailing: boolean;
-    vals: TableRow[];
-    failingVals: TableRow[];
-    amountIsPlural: boolean;
-    currentlyFailing: boolean;
-  }
-) & {
-  loggedOut: boolean;
-  noMarks: boolean;
-  newVersion: boolean;
-  errorMsg?: Error;
-};
 
 class Default extends Component {
   state: DefaultState = {
@@ -407,82 +357,8 @@ class Default extends Component {
         if (url && password && username) {
           login({url, username, password})
             .then(rows => {
-              const vals: TableRow[] = [];
-
-              for (const row of rows) {
-                const courseName =
-                  row.firstElementChild?.lastChild?.textContent?.trim();
-                const stringMark = row.children[1]?.textContent;
-
-                if (courseName && stringMark) {
-                  const mark = roundMark(stringMark);
-
-                  vals.push({
-                    courseName,
-                    mark,
-                    key: uniqueId()
-                  });
-                }
-              }
-
-              const filteredRows = rows
-                .map(currentRow => ({
-                  courseName:
-                    currentRow.firstElementChild?.lastChild?.textContent?.trim(),
-                  mark: roundMark(currentRow?.children?.[1]?.textContent ?? ''),
-                  key: uniqueId()
-                }))
-                .filter(
-                  ({courseName}) =>
-                    typeof courseName === 'string' &&
-                    !ignoring.includes(courseName.toLowerCase())
-                );
-
-              if (filteredRows.length <= 0) {
-                this.setState({
-                  loading: false,
-                  noMarks: true
-                } as DefaultState);
-                return;
-              }
-
-              let avg = 0;
-              for (const {mark} of filteredRows) {
-                avg += mark;
-              }
-
-              avg /= filteredRows.length;
-
-              const average = avg.toFixed(3);
-              const averageFailing = avg < 4;
-
-              let compDub = 0;
-              for (const {mark} of filteredRows) {
-                compDub += (mark - 4) * (mark < 4 ? 2 : 1);
-              }
-
-              const compDubFailing = compDub < 0;
-
-              const failingVals = filteredRows.filter(({mark}) => mark < 4);
-
-              const failingAmount = failingVals.length;
-              const failingAmountFailing = failingAmount > 3;
-              const amountIsPlural = failingAmount !== 1;
-
-              const currentlyFailing =
-                averageFailing || compDubFailing || failingAmountFailing;
-
               this.setState({
-                average,
-                averageFailing,
-                compDub,
-                compDubFailing,
-                failingAmount,
-                failingAmountFailing,
-                vals: filteredRows,
-                failingVals,
-                amountIsPlural,
-                currentlyFailing,
+                ...calculate(rows, ignoring),
                 loading: false
               } as DefaultState);
             })
@@ -546,10 +422,5 @@ const Table = ({vals}: TableVals) =>
       </div>
     </div>
   ) : null;
-
-const roundMark = (number: string) => {
-  const parsedNumber = Number.parseFloat(number);
-  return Math.round(parsedNumber * 2) / 2;
-};
 
 render(<Main />, document.body);
