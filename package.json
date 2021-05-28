@@ -10,6 +10,7 @@
     "concurrently": "^6.2.0",
     "copy-webpack-plugin": "^9.0.0",
     "env-cmd": "^10.1.0",
+    "eslint-config-xo-typescript": "^0.41.1",
     "prettier": "^2.3.0",
     "terser-webpack-plugin": "^5.1.2",
     "ts-loader": "^9.2.2",
