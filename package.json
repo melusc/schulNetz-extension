@@ -18,7 +18,7 @@
     "web-ext": "^6.1.0",
     "webpack": "^5.39.1",
     "webpack-cli": "^4.7.2",
-    "xo": "^0.40.2"
+    "xo": "^0.40.3"
   },
   "license": "ISC",
   "main": "index.js",
