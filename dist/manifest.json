@@ -1,24 +1,24 @@
 {
-  "author": "lusc",
-  "browser_action": {
-    "browser_style": false,
-    "default_icon": {
-      "16": "img/16.png",
-      "32": "img/32.png"
-    },
-    "default_popup": "popup.html",
-    "default_title": "schulNetz marks summariser"
-  },
-  "description": "Get summary of your marks from schulNetz",
-  "icons": {
-    "16": "img/16.png",
-    "32": "img/32.png",
-    "48": "img/48.png",
-    "64": "img/64.png",
-    "96": "img/96.png"
-  },
-  "manifest_version": 2,
-  "name": "schulNetz marks summariser",
-  "permissions": ["https://www.schul-netz.com/*", "storage"],
-  "version": "2021.05.13a"
+	"author": "lusc",
+	"browser_action": {
+		"browser_style": false,
+		"default_icon": {
+			"16": "img/16.png",
+			"32": "img/32.png"
+		},
+		"default_popup": "popup.html",
+		"default_title": "schulNetz marks summariser"
+	},
+	"description": "Get summary of your marks from schulNetz",
+	"icons": {
+		"16": "img/16.png",
+		"32": "img/32.png",
+		"48": "img/48.png",
+		"64": "img/64.png",
+		"96": "img/96.png"
+	},
+	"manifest_version": 2,
+	"name": "schulNetz marks summariser",
+	"permissions": ["https://www.schul-netz.com/*", "storage"],
+	"version": "2021.06.26a"
 }

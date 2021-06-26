@@ -9,8 +9,8 @@
  */
 
 html {
-  line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
+	line-height: 1.15; /* 1 */
+	-webkit-text-size-adjust: 100%; /* 2 */
 }
 
 /* Sections
@@ -21,7 +21,7 @@ html {
  */
 
 body {
-  margin: 0;
+	margin: 0;
 }
 
 /* Grouping content
@@ -33,9 +33,9 @@ body {
  */
 
 hr {
-  box-sizing: content-box; /* 1 */
-  height: 0; /* 1 */
-  overflow: visible; /* 2 */
+	box-sizing: content-box; /* 1 */
+	height: 0; /* 1 */
+	overflow: visible; /* 2 */
 }
 
 /* Text-level semantics
@@ -46,7 +46,7 @@ hr {
  */
 
 a {
-  background-color: transparent;
+	background-color: transparent;
 }
 
 /**
@@ -54,7 +54,7 @@ a {
  */
 
 small {
-  font-size: 80%;
+	font-size: 80%;
 }
 
 /* Forms
@@ -67,10 +67,10 @@ small {
 
 button,
 input {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  line-height: 1.15; /* 1 */
-  margin: 0; /* 2 */
+	font-family: inherit; /* 1 */
+	font-size: 100%; /* 1 */
+	line-height: 1.15; /* 1 */
+	margin: 0; /* 2 */
 }
 
 /**
@@ -80,8 +80,8 @@ input {
 
 button,
 input {
-  /* 1 */
-  overflow: visible;
+	/* 1 */
+	overflow: visible;
 }
 
 /**
@@ -90,8 +90,8 @@ input {
  */
 
 button {
-  /* 1 */
-  text-transform: none;
+	/* 1 */
+	text-transform: none;
 }
 
 /**
@@ -99,5 +99,5 @@ button {
  */
 
 button {
-  -webkit-appearance: button;
+	-webkit-appearance: button;
 }
