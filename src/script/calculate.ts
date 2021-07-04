@@ -1,4 +1,5 @@
-import {TableRow, CalculateReturnValue, Stages} from '.';
+import {TableRow, CalculateReturnValue} from './index.d';
+import {Stages} from './stages';
 
 let counter = 0;
 const uniqueId = () => `${counter++}`;
@@ -13,7 +14,7 @@ export const calculate = (
 	ignoring: string[],
 ): CalculateReturnValue => {
 	const filteredRows: TableRow[] = [];
-	const failingRows: TableRow[] = [];
+	let amountFailing = 0;
 
 	for (const row of tableRows) {
 		const courseName = row.firstElementChild?.lastChild?.textContent?.trim();
@@ -30,57 +31,46 @@ export const calculate = (
 				courseName,
 				mark,
 				key: uniqueId(),
+				failing: mark < 4,
 			};
 
-			filteredRows.push(row);
-
-			if (mark < 4) {
-				failingRows.push(row);
+			if (row.failing) {
+				++amountFailing;
 			}
+
+			filteredRows.push(row);
 		}
 	}
 
-	if (filteredRows.length <= 0) {
+	if (filteredRows.length === 0) {
 		return {
 			stage: Stages.NoMarks,
 		};
 	}
 
-	let avg = 0;
-	for (const {mark} of filteredRows) {
-		avg += mark;
-	}
-
-	avg /= filteredRows.length;
-
-	const average = avg.toFixed(3);
-	const averageFailing = avg < 4;
-
+	let average = 0;
 	let compDub = 0;
 	for (const {mark} of filteredRows) {
+		average += mark;
+
 		compDub += (mark - 4) * (mark < 4 ? 2 : 1);
 	}
 
-	const compDubFailing = compDub < 0;
+	average /= filteredRows.length;
+	average = Math.round(average * 1000) / 1000; // Only want three decimal points
 
-	const failingAmount = failingRows.length;
-	const failingAmountFailing = failingAmount > 3;
-	const amountIsPlural = failingAmount !== 1;
-
-	const currentlyFailing =
-		averageFailing || compDubFailing || failingAmountFailing;
+	const currentlyFailing = average < 4 || compDub < 0 || amountFailing > 3;
 
 	return {
 		marks: {
 			average,
-			averageFailing,
-			compDub: String(compDub),
-			compDubFailing,
-			failingAmount: String(failingAmount),
-			failingAmountFailing,
+			compDub,
+			amountFailing,
+
 			rows: filteredRows,
-			failingRows,
-			amountIsPlural,
+
+			isFailingAmountPlural: amountFailing !== 1,
+
 			currentlyFailing,
 		},
 

@@ -1,39 +1,16 @@
 import {h} from 'preact';
-import {useEffect} from 'preact/hooks';
+import {StateUpdater, useEffect, useState} from 'preact/hooks';
 import {route} from 'preact-router';
 
-import {proxy, useSnapshot} from 'valtio';
 import {login, Errors} from '../login';
 import {calculate} from '../calculate';
-import {emptyObject} from '../utils';
 
-import type {DefaultState} from '..';
-import {Stages} from '..';
-import {TableFromState} from './table';
+import type {DefaultState} from '../index.d';
+import {Stages} from '../stages';
+import {DisplayMarks} from './display-marks';
+import {NewVersion} from './new-version';
 
-const state = proxy<DefaultState>({
-	stage: Stages.Loading,
-	newVersion: false,
-});
-
-const newVersionAvailable = async (): Promise<boolean> => {
-	return fetch(
-		'https://api.github.com/repos/melusc/schulnetz-extension/releases/latest',
-	)
-		.then(async response => response.json())
-		.then((responseJSON: Record<string, unknown>) => {
-			const newVersion = responseJSON.tag_name;
-			if (typeof newVersion !== 'string') {
-				return false;
-			}
-
-			const oldVersion = chrome.runtime.getManifest().version;
-
-			return newVersion > oldVersion;
-		});
-};
-
-const loginAndGetMarks = () => {
+const loginAndGetMarks = (setState: StateUpdater<DefaultState>) => {
 	chrome.storage.local.get(
 		['url', 'password', 'username', 'ignoring'],
 		({
@@ -50,24 +27,24 @@ const loginAndGetMarks = () => {
 			if (url && password && username) {
 				login({url, username, password})
 					.then(rows => {
-						emptyObject(state);
-
-						Object.assign(state, calculate(rows, ignoring));
+						setState(calculate(rows, ignoring));
 					})
 					.catch((error: Error) => {
-						emptyObject(state);
-
 						if (error.message === Errors.INCORRECT_CREDS) {
-							state.stage = Stages.LoggedOut;
+							setState({
+								stage: Stages.LoggedOut,
+							});
 						} else {
-							Object.assign(state, {
+							setState({
 								stage: Stages.Errored,
-								error,
-							} as DefaultState);
+								error: error.message,
+							});
 						}
 					});
 			} else {
-				state.stage = Stages.LoggedOut;
+				setState({
+					stage: Stages.LoggedOut,
+				});
 			}
 		},
 	);
@@ -76,25 +53,17 @@ const loginAndGetMarks = () => {
 // For preact-router to allow path=".."
 export const Default = (_props: {path: string}) => {
 	useEffect(() => {
-		emptyObject(state);
-
-		Object.assign<DefaultState, DefaultState>(state, {
-			stage: Stages.Loading,
-			newVersion: false,
-		});
-
-		loginAndGetMarks();
-
-		void newVersionAvailable().then(newVersion => {
-			state.newVersion = newVersion;
-		});
+		loginAndGetMarks(setState);
 	}, []);
 
-	const snap = useSnapshot(state);
-	const {stage, newVersion} = snap;
+	const [state, setState] = useState<Readonly<DefaultState>>({
+		stage: Stages.Loading,
+	});
+
+	const {stage} = state;
 
 	return (
-		<div class="margin">
+		<>
 			<div>
 				<button
 					class="btn"
@@ -105,25 +74,16 @@ export const Default = (_props: {path: string}) => {
 				>
 					Open settings
 				</button>
-				<hr/>
+				<hr />
 			</div>
 
-			{newVersion && (
-				<div id="new-version">
-					<a
-						href="https://github.com/melusc/schulNetz-extension/releases/latest"
-						rel="noopener noreferrer"
-					>
-						New version available
-					</a>
-				</div>
-			)}
+			<NewVersion />
 			{stage === Stages.Loading && (
 				<>
 					<div class="loading-outer">
-						<div class="loading-inner"/>
+						<div class="loading-inner" />
 					</div>
-					<hr/>
+					<hr />
 				</>
 			)}
 			{stage === Stages.LoggedOut && (
@@ -135,25 +95,23 @@ export const Default = (_props: {path: string}) => {
 					</div>
 				</div>
 			)}
-			{state.stage === Stages.Loaded && <TableFromState state={state}/>}
+			{state.stage === Stages.Loaded && <DisplayMarks marks={state.marks} />}
 
-			{state.stage === Stages.NoMarks && (
+			{stage === Stages.NoMarks && (
 				<>
 					<div>You don&apos;t have any marks</div>
-					<hr/>
+					<hr />
 				</>
 			)}
 
-			{snap.stage === Stages.Errored && (
+			{state.stage === Stages.Errored && (
 				<>
-					<div>
-						{typeof snap.error === 'string' ? snap.error : snap.error.message}
-					</div>
-					<hr/>
+					<div>{state.error}</div>
+					<hr />
 				</>
 			)}
 
 			<small>{chrome.runtime.getManifest().version}</small>
-		</div>
+		</>
 	);
 };

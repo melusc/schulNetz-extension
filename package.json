@@ -3,8 +3,7 @@
 	"dependencies": {
 		"clsx": "^1.1.1",
 		"preact": "^10.5.14",
-		"preact-router": "^3.2.1",
-		"valtio": "^1.0.6"
+		"preact-router": "^3.2.1"
 	},
 	"description": "",
 	"devDependencies": {
@@ -30,7 +29,7 @@
 		"arrowParens": "avoid",
 		"bracketSpacing": false,
 		"singleQuote": true,
-		"trailingComma": "none",
+		"trailingComma": "es5",
 		"useTabs": true
 	},
 	"scripts": {
@@ -71,6 +70,12 @@
 			],
 			"react/jsx-curly-newline": "off",
 			"react/jsx-indent": "off",
+			"react/jsx-tag-spacing": [
+				"error",
+				{
+					"beforeSelfClosing": "always"
+				}
+			],
 			"react/no-unknown-property": [
 				"error",
 				{

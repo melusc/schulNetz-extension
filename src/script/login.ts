@@ -1,5 +1,5 @@
 export const enum Errors {
-	INCORRECT_CREDS = 'INCORRECT_CREDS',
+	INCORRECT_CREDS = 'Incorrect credentials',
 }
 
 export const login = async ({
@@ -10,7 +10,7 @@ export const login = async ({
 	url: string;
 	username: string;
 	password: string;
-}) => {
+}): Promise<HTMLTableRowElement[]> => {
 	const loginhashRequest = await fetch(
 		`https://www.schul-netz.com/${url}/loginto.php?mode=0&lang=`,
 	);
@@ -80,13 +80,19 @@ export const login = async ({
 		});
 	}
 
-	return [...marksTable.rows]
-		.slice(1)
-		.filter(
-			element =>
-				element.style.display !== 'none' &&
-				Number.isFinite(
-					Number.parseFloat(element.children?.[1]?.textContent?.trim() ?? 'NaN'),
-				),
+	const result = [];
+
+	for (let i = 1; i < marksTable.rows.length; ++i) {
+		const item = marksTable.rows[i];
+
+		const mark = Number(
+			item.children?.[1]?.textContent?.trim().replace(/\*$/, '') ?? Number.NaN,
 		);
+
+		if (item.style.display !== 'none' && Number.isFinite(mark)) {
+			result.push(item);
+		}
+	}
+
+	return result;
 };

@@ -1,30 +1,22 @@
-// https://stackoverflow.com/a/40614350
-export const enum Stages {
-	Loading = 0,
-	Errored = 1,
-	NoMarks = 2,
-	LoggedOut = 3,
-	Loaded = 4,
-}
+import {Stages} from './stages';
 
 type SettingsState = {
 	username: string;
 	password: string;
 	ignoring: string;
 	url: string;
-	validSaved?: boolean;
-	errorMsg?: Error | string;
 };
 
 type TableRow = {
 	courseName: string;
 	mark: number;
 	key: string;
+	failing: boolean;
 };
 
 type StageErrored = {
 	stage: Stages.Errored;
-	error: string | Error;
+	error: string;
 };
 
 type StageLoggedOut = {
@@ -37,15 +29,13 @@ type StageLoading = {
 
 type CalculateReturnValueMarks = {
 	marks: {
-		average: string;
-		averageFailing: boolean;
-		compDub: string;
-		compDubFailing: boolean;
-		failingAmount: string;
-		failingAmountFailing: boolean;
-		failingRows: TableRow[];
+		average: number;
+		compDub: number;
+		amountFailing: number;
+
 		rows: TableRow[];
-		amountIsPlural: boolean;
+
+		isFailingAmountPlural: boolean;
 		currentlyFailing: boolean;
 	};
 
@@ -60,12 +50,11 @@ type CalculateReturnValue =
 	| CalculateReturnValueMarks
 	| CalculateReturnValueNoMarks;
 
-type DefaultState = (
+type DefaultState =
 	| StageErrored
 	| StageLoading
 	| StageLoggedOut
-	| CalculateReturnValue
-) & {newVersion: boolean};
+	| CalculateReturnValue;
 
 export {
 	SettingsState,
