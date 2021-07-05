@@ -5,34 +5,34 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
 	mode: 'production',
 	entry: {
-		popup: './src/script/popup.tsx'
+		popup: './src/script/popup.tsx',
 	},
 	output: {
 		clean: true,
 		filename: '[name].js',
-		path: path.resolve(__dirname, 'dist/script')
+		path: path.resolve(__dirname, 'dist/script'),
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css'],
 		alias: {
 			react: 'preact/compat',
-			'react-dom': 'preact/compat'
-		}
+			'react-dom': 'preact/compat',
+		},
 	},
 	plugins: [
 		new CopyPlugin({
 			patterns: [
 				{
 					from: 'public',
-					to: '..'
-				}
-			]
-		})
+					to: '..',
+				},
+			],
+		}),
 	],
 	cache: {
 		type: 'filesystem',
 		cacheDirectory: path.resolve(__dirname, '.cache'),
-		buildDependencies: {config: [__filename]}
+		buildDependencies: {config: [__filename]},
 	},
 	optimization: {
 		usedExports: true,
@@ -41,17 +41,17 @@ module.exports = {
 			new TerserPlugin({
 				terserOptions: {
 					compress: true,
-					mangle: true
-				}
-			})
-		]
+					mangle: true,
+				},
+			}),
+		],
 	},
 	module: {
 		rules: [
 			{
 				test: /\.tsx?$/i,
-				use: ['ts-loader']
-			}
-		]
-	}
+				use: ['ts-loader'],
+			},
+		],
+	},
 };

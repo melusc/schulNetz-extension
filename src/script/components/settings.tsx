@@ -49,8 +49,8 @@ export const Settings = (_props: {path: string}) => {
 		);
 	}, []);
 
-	const handleInput =
-		(
+	const handleInput
+		= (
 			type: 'username' | 'password' | 'url' | 'ignoring',
 		): h.JSX.GenericEventHandler<HTMLInputElement> =>
 		event_ => {
@@ -81,9 +81,9 @@ export const Settings = (_props: {path: string}) => {
 					.filter(item => item !== '');
 
 				if (
-					password === origPassword &&
-					username === origUsername &&
-					url === origUrl
+					password === origPassword
+					&& username === origUsername
+					&& url === origUrl
 				) {
 					chrome.storage.local.set({ignoring});
 
@@ -125,8 +125,8 @@ export const Settings = (_props: {path: string}) => {
 		);
 	};
 
-	const handleKeydownSave: h.JSX.KeyboardEventHandler<HTMLDivElement> =
-		event_ => {
+	const handleKeydownSave: h.JSX.KeyboardEventHandler<HTMLDivElement>
+		= event_ => {
 			if (event_.key === 'Enter') {
 				handleSave();
 			}

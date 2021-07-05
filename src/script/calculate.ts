@@ -21,9 +21,9 @@ export const calculate = (
 		const stringMark = row.children[1]?.textContent;
 
 		if (
-			courseName &&
-			stringMark &&
-			!ignoring.includes(courseName.toLowerCase())
+			courseName
+			&& stringMark
+			&& !ignoring.includes(courseName.toLowerCase())
 		) {
 			const mark = roundMark(stringMark);
 
