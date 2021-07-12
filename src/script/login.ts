@@ -56,17 +56,23 @@ export const login = async ({
 		throw new Error(Errors.INCORRECT_CREDS);
 	}
 
-	const marksPageText = await marksPageRequest.text();
 	const parsedMarksPage = new DOMParser().parseFromString(
-		marksPageText,
+		await marksPageRequest.text(),
 		'text/html',
 	);
-	const marksTable = [...parsedMarksPage.querySelectorAll('h3')]
-		.find(element => /aktuelle noten/i.test(element.textContent ?? ''))
-		?.nextElementSibling?.querySelector<HTMLTableElement>('table');
+	const marksTable = parsedMarksPage.evaluate(
+		'//h3' // All h3
+			+ '[contains(text(), "Aktuelle Noten")]' // That have text "Aktuelle Noten"
+			+ '/following-sibling::div' // Get all following sibling that are divs
+			+ '/table', // Get tables that are direct descendants
+		parsedMarksPage.body,
+		null,
+		XPathResult.FIRST_ORDERED_NODE_TYPE,
+		null,
+	).singleNodeValue as HTMLTableElement | null;
 
 	if (!marksTable) {
-		throw new Error('Could not find marks table.');
+		throw new Error('Could not find table of marks.');
 	}
 
 	const logoutURL = parsedMarksPage
@@ -75,7 +81,8 @@ export const login = async ({
 
 	if (logoutURL) {
 		const fullLogoutURL = `https://www.schul-netz.com/${url}/${logoutURL}`;
-		await fetch(fullLogoutURL, {
+
+		void fetch(fullLogoutURL, {
 			method: 'HEAD',
 		});
 	}
@@ -85,11 +92,17 @@ export const login = async ({
 	for (let i = 1; i < marksTable.rows.length; ++i) {
 		const item = marksTable.rows[i];
 
+		if (item.style.display === 'none') {
+			continue;
+		}
+
+		// Number(undefined) is NaN...
 		const mark = Number(
-			item.children?.[1]?.textContent?.trim().replace(/\*$/, '') ?? Number.NaN,
+			item.children?.[1]?.textContent?.trim().replace(/\*$/, ''),
 		);
 
-		if (item.style.display !== 'none' && Number.isFinite(mark)) {
+		// ... and NaN is not finite
+		if (Number.isFinite(mark)) {
 			result.push(item);
 		}
 	}

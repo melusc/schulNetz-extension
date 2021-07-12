@@ -52,13 +52,13 @@ const loginAndGetMarks = (setState: StateUpdater<DefaultState>) => {
 
 // For preact-router to allow path=".."
 export const Default = (_props: {path: string}) => {
-	useEffect(() => {
-		loginAndGetMarks(setState);
-	}, []);
-
 	const [state, setState] = useState<Readonly<DefaultState>>({
 		stage: Stages.Loading,
 	});
+
+	useEffect(() => {
+		loginAndGetMarks(setState);
+	}, []);
 
 	const {stage} = state;
 

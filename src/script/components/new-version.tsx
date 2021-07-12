@@ -1,7 +1,37 @@
 import {h} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
 
-const newVersionAvailable = async (): Promise<boolean> => {
+const getUnixInSeconds = () => Math.floor(Date.now() / 1000);
+
+const checkIsNewVersionAvailable = async (): Promise<boolean> => {
+	const lastCheckedForUpdate = await new Promise<number | undefined>(
+		resolve => {
+			chrome.storage.local.get(
+				['lastCheckedForUpdate'],
+				({lastCheckedForUpdate}: {lastCheckedForUpdate?: number}) => {
+					resolve(lastCheckedForUpdate);
+				},
+			);
+		},
+	);
+
+	/* If last checked was less than 5 minutes
+		 ago, return false.
+		 5 minutes was chosen arbitrarily */
+	if (
+		typeof lastCheckedForUpdate === 'number'
+		&& getUnixInSeconds() - lastCheckedForUpdate < 60 * 60 * 5
+	) {
+		return false;
+	}
+
+	/* No await
+  	 If it gets written to from multiple locations
+		 it will be roughly the same time anyway */
+	chrome.storage.local.set({
+		lastCheckedForUpdate: getUnixInSeconds(),
+	});
+
 	const response = await fetch(
 		'https://api.github.com/repos/melusc/schulnetz-extension/releases/latest',
 	);
@@ -34,15 +64,15 @@ const newVersionAvailable = async (): Promise<boolean> => {
 };
 
 export const NewVersion = () => {
-	const [newVersion, setNewVersion] = useState(false);
+	const [isNewVersionAvailable, setNewVersionAvailability] = useState(false);
 
 	useEffect(() => {
-		void newVersionAvailable().then(newVersion => {
-			setNewVersion(newVersion);
+		void checkIsNewVersionAvailable().then(isNewVersionAvailable => {
+			setNewVersionAvailability(isNewVersionAvailable);
 		});
-	});
+	}, []);
 
-	return newVersion ? (
+	return isNewVersionAvailable ? (
 		<div id="new-version">
 			<a
 				href="https://github.com/melusc/schulNetz-extension/releases/latest"
