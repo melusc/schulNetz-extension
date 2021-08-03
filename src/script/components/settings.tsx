@@ -85,7 +85,7 @@ export const Settings = (_props: {path: string}) => {
 					&& username === origUsername
 					&& url === origUrl
 				) {
-					chrome.storage.local.set({ignoring});
+					void chrome.storage.local.set({ignoring});
 
 					setState({
 						ignoring: ignoring.join(', '),
@@ -97,7 +97,7 @@ export const Settings = (_props: {path: string}) => {
 				} else if (password !== '' && username !== '' && url !== '') {
 					login({url, username, password})
 						.then(() => {
-							chrome.storage.local.set({
+							void chrome.storage.local.set({
 								url,
 								password,
 								username,

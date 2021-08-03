@@ -28,7 +28,7 @@ const checkIsNewVersionAvailable = async (): Promise<boolean> => {
 	/* No await
   	 If it gets written to from multiple locations
 		 it will be roughly the same time anyway */
-	chrome.storage.local.set({
+	void chrome.storage.local.set({
 		lastCheckedForUpdate: getUnixInSeconds(),
 	});
 
