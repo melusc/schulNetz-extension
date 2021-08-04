@@ -7,7 +7,7 @@
 	},
 	"description": "",
 	"devDependencies": {
-		"@types/chrome": "^0.0.151",
+		"@types/chrome": "^0.0.153",
 		"concurrently": "^6.2.0",
 		"copy-webpack-plugin": "^9.0.1",
 		"env-cmd": "^10.1.0",
