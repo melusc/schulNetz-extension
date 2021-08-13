@@ -12,7 +12,7 @@
 		"copy-webpack-plugin": "^9.0.1",
 		"env-cmd": "^10.1.0",
 		"eslint-config-xo-react": "^0.25.0",
-		"eslint-config-xo-typescript": "^0.43.0",
+		"eslint-config-xo-typescript": "^0.44.0",
 		"prettier": "^2.3.2",
 		"terser-webpack-plugin": "^5.1.4",
 		"ts-loader": "^9.2.5",
