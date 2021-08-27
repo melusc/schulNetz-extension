@@ -29,7 +29,7 @@
 		"arrowParens": "avoid",
 		"bracketSpacing": false,
 		"singleQuote": true,
-		"trailingComma": "es5",
+		"trailingComma": "all",
 		"useTabs": true
 	},
 	"scripts": {
