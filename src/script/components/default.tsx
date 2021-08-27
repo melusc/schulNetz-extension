@@ -95,7 +95,7 @@ export const Default = (_props: {path: string}) => {
 					</div>
 				</div>
 			)}
-			{state.stage === Stages.Loaded && <DisplayMarks marks={state.marks} />}
+			{stage === Stages.Loaded && <DisplayMarks marks={state.marks} />}
 
 			{stage === Stages.NoMarks && (
 				<>
@@ -104,7 +104,7 @@ export const Default = (_props: {path: string}) => {
 				</>
 			)}
 
-			{state.stage === Stages.Errored && (
+			{stage === Stages.Errored && (
 				<>
 					<div>{state.error}</div>
 					<hr />
