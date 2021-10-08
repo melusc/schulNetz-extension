@@ -33,7 +33,7 @@
 	},
 	"scripts": {
 		"build": "npm run lint && npm run webpack && web-ext lint -s dist",
-		"lint": "prettier -w \"{*,src/**/*,public/**/*}.{js,ts,tsx,html,css,json}\" \"!package-lock.json\" && xo --fix",
+		"lint": "prettier -w . && xo --fix",
 		"sign": "env-cmd \"web-ext sign -s dist\"",
 		"start": "concurrently \"web-ext run -s dist\" \"npm:webpack:w\"",
 		"test": "xo",
