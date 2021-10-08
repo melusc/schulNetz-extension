@@ -8,7 +8,7 @@
 	"description": "",
 	"devDependencies": {
 		"@types/chrome": "^0.0.158",
-		"concurrently": "^6.2.2",
+		"concurrently": "^6.3.0",
 		"copy-webpack-plugin": "^9.0.1",
 		"env-cmd": "^10.1.0",
 		"eslint-config-xo-react": "^0.25.0",
