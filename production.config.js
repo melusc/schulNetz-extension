@@ -11,6 +11,7 @@ module.exports = {
 		clean: true,
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist/script'),
+		hashFunction: 'xxhash64',
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css'],
