@@ -1,4 +1,4 @@
-import {h} from 'preact';
+import {h, Fragment} from 'preact';
 import {StateUpdater, useEffect, useState} from 'preact/hooks';
 import {route} from 'preact-router';
 
@@ -51,7 +51,7 @@ const loginAndGetMarks = (setState: StateUpdater<DefaultState>) => {
 };
 
 // For preact-router to allow path=".."
-export const Default = (_props: {path: string}) => {
+const Default = (_props: {path: string}) => {
 	const [state, setState] = useState<Readonly<DefaultState>>({
 		stage: Stages.Loading,
 	});
@@ -115,3 +115,5 @@ export const Default = (_props: {path: string}) => {
 		</>
 	);
 };
+
+export default Default;

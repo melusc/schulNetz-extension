@@ -1,4 +1,4 @@
-import {h} from 'preact';
+import {h, Fragment} from 'preact';
 import {route} from 'preact-router';
 import clsx from 'clsx';
 
@@ -8,7 +8,7 @@ import {login} from '../login';
 import type {SettingsState} from '../index.d';
 
 // For preact-router to allow path=".."
-export const Settings = (_props: {path: string}) => {
+const Settings = (_props: {path: string}) => {
 	const [state, setState] = useReducer<
 		Readonly<SettingsState>,
 		Readonly<Partial<SettingsState>>
@@ -213,3 +213,5 @@ export const Settings = (_props: {path: string}) => {
 		</>
 	);
 };
+
+export default Settings;
