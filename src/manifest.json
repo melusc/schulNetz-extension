@@ -20,5 +20,5 @@
 	"manifest_version": 2,
 	"name": "schulNetz marks summariser",
 	"permissions": ["https://www.schul-netz.com/*", "storage"],
-	"version": "2021.07.13"
+	"version": "2021.11.13"
 }
