@@ -1,6 +1,6 @@
-node_modules
-.cache
+/node_modules/
 web-ext-artifacts
 .env
 .web-extension-id
-dist
+/dist/
+/.parcel-cache

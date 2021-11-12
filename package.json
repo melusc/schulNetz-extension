@@ -7,20 +7,17 @@
 	},
 	"description": "",
 	"devDependencies": {
+		"@parcel/config-webextension": "^2.0.1",
 		"@types/chrome": "^0.0.163",
 		"concurrently": "^6.3.0",
-		"copy-webpack-plugin": "^9.0.1",
 		"env-cmd": "^10.1.0",
 		"eslint-config-xo-react": "^0.25.0",
 		"eslint-plugin-react": "^7.26.1",
 		"eslint-plugin-react-hooks": "^4.2.0",
+		"parcel": "^2.0.1",
 		"prettier": "^2.4.1",
-		"terser-webpack-plugin": "^5.2.4",
-		"ts-loader": "^9.2.6",
 		"typescript": "^4.4.4",
 		"web-ext": "^6.5.0",
-		"webpack": "^5.61.0",
-		"webpack-cli": "^4.9.1",
 		"xo": "^0.46.4"
 	},
 	"license": "MIT",
@@ -33,14 +30,24 @@
 		"trailingComma": "all",
 		"useTabs": true
 	},
+	"targets": {
+		"webext-dev": {
+			"sourceMap": {
+				"inline": true,
+				"inlineSources": true
+			}
+		},
+		"webext-prod": {}
+	},
 	"scripts": {
-		"build": "npm run lint && npm run webpack && web-ext lint -s dist",
+		"prebuild": "yarn lint",
+		"build": "del-cli dist/webext-prod && parcel build src/manifest.json --target webext-prod --config @parcel/config-webextension",
+		"postbuild": "web-ext lint -s dist/webext-prod",
+		"parcel:w": "del-cli dist/webext-dev && parcel src/manifest.json --host localhost --target webext-dev --config @parcel/config-webextension --dist-dir dist/webext-dev",
+		"start": "concurrently \"web-ext run -s dist/webext-dev\" \"npm:parcel:w\"",
 		"lint": "prettier -w . && xo --fix",
-		"sign": "env-cmd \"web-ext sign -s dist\"",
-		"start": "concurrently \"web-ext run -s dist\" \"npm:webpack:w\"",
-		"test": "xo",
-		"webpack": "webpack -c production.config.js",
-		"webpack:w": "webpack -c production.config.js -w"
+		"sign": "env-cmd \"web-ext sign -s dist/webext-prod\"",
+		"test": "xo"
 	},
 	"sideEffects": false,
 	"version": "1.0.0",
