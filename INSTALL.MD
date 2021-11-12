@@ -1,13 +1,9 @@
 # Install
 
-Using node 14.x
+Using node 17.x
 
-Run `npm install`
+Run `yarn install`
 
-Run `npm run webpack`
+Run `yarn build`
 
-Original files are in `src/`, compiled js files and non-js files in `dist/`.
-
-The extension is basically `dist/` after compilation.
-
-(This file is mainly for reviewers from mozilla)
+Original files are in `src/`, compiled js files and non-js files in `dist/webext-prod`.
