@@ -53,7 +53,7 @@ const checkIsNewVersionAvailable = async (): Promise<boolean> => {
 		return false;
 	}
 
-	const newVersion = responseJSON.tag_name;
+	const newVersion = responseJSON['tag_name'];
 	if (typeof newVersion !== 'string') {
 		return false;
 	}

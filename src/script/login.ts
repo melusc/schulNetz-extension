@@ -90,7 +90,7 @@ export const login = async ({
 	const result = [];
 
 	for (let i = 1; i < marksTable.rows.length; ++i) {
-		const item = marksTable.rows[i];
+		const item = marksTable.rows[i]!;
 
 		if (item.style.display === 'none') {
 			continue;
