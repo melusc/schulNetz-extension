@@ -1,13 +1,3 @@
 {
-	"compilerOptions": {
-		"jsx": "react",
-		"jsxFactory": "h",
-		"jsxFragmentFactory": "Fragment",
-		"module": "esnext",
-		"noUnusedParameters": true,
-		"strict": true,
-		"stripInternal": true,
-		"target": "esnext"
-	},
-	"extends": "@sindresorhus/tsconfig"
+	"extends": "@lusc/tsconfig"
 }
