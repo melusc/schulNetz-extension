@@ -111,7 +111,7 @@ const Default = (_props: {path: string}) => {
 				</>
 			)}
 
-			<small>{chrome.runtime.getManifest().version}</small>
+			<small>v{chrome.runtime.getManifest().version}</small>
 		</>
 	);
 };
