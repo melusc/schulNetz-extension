@@ -125,12 +125,13 @@ const Settings = (_props: {path: string}) => {
 		);
 	};
 
-	const handleKeydownSave: h.JSX.KeyboardEventHandler<HTMLDivElement>
-		= event_ => {
-			if (event_.key === 'Enter') {
-				handleSave();
-			}
-		};
+	const handleKeydownSave: h.JSX.KeyboardEventHandler<
+		HTMLDivElement
+	> = event_ => {
+		if (event_.key === 'Enter') {
+			handleSave();
+		}
+	};
 
 	const {username, password, ignoring, url} = state;
 

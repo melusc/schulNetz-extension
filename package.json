@@ -59,7 +59,8 @@
 				"files": "src/**/*.{ts,tsx}",
 				"rules": {
 					"@typescript-eslint/indent": "off",
-					"@typescript-eslint/naming-convention": "off"
+					"@typescript-eslint/naming-convention": "off",
+					"import/extensions": "off"
 				}
 			},
 			{
