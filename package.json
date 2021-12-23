@@ -45,7 +45,7 @@
 		"postbuild": "web-ext lint -s dist/webext-prod",
 		"parcel:w": "del-cli dist/webext-dev && parcel src/manifest.json --host localhost --target webext-dev --config @parcel/config-webextension --dist-dir dist/webext-dev",
 		"start": "concurrently \"web-ext run -s dist/webext-dev\" \"yarn:parcel:w\"",
-		"lint": "prettier -w . && xo --fix",
+		"fmt": "prettier -w . && xo --fix",
 		"sign": "env-cmd \"web-ext sign -s dist/webext-prod\"",
 		"test": "tsc --noEmit"
 	},
