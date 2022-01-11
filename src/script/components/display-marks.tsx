@@ -14,9 +14,15 @@ const Table = ({rows}: {rows: TableRow[] | undefined}) =>
 			</div>
 			<div>
 				{rows.map(({mark, courseName, key, failing}) => (
-					<div key={key} class={clsx('tr', {failing})}>
+					<div
+						key={key}
+						class={clsx('tr', {
+							failing,
+							'best-mark': mark === 6,
+						})}
+					>
 						<div>{courseName}</div>
-						<div>{mark}</div>
+						<div>{mark.toFixed(1)}</div>
 					</div>
 				))}
 			</div>

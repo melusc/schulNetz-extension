@@ -6,6 +6,7 @@
 	--text: #bdc1c6;
 	--bg: #202124;
 	--warn: #ffc107;
+	--best-mark: #93bef9;
 }
 
 @font-face {
@@ -30,7 +31,7 @@ body {
 	min-width: 450px;
 	width: 100%;
 	text-align: center;
-	font-size: 16px;
+	font-size: 18px;
 
 	padding: 30px 30px;
 }
@@ -152,6 +153,9 @@ button {
 }
 .warn {
 	color: var(--warn);
+}
+.best-mark {
+	color: var(--best-mark);
 }
 
 @keyframes fade_green {
