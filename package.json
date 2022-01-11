@@ -40,7 +40,7 @@
 		"webext-prod": {}
 	},
 	"scripts": {
-		"prebuild": "yarn lint && yarn test",
+		"prebuild": "yarn fmt && yarn test",
 		"build": "del-cli dist/webext-prod && parcel build src/manifest.json --target webext-prod --config @parcel/config-webextension",
 		"postbuild": "web-ext lint -s dist/webext-prod",
 		"parcel:w": "parcel watch src/manifest.json --target webext-dev --config @parcel/config-webextension",
