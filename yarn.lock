@@ -1035,10 +1035,10 @@
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
-"@types/chrome@^0.0.177":
-  version "0.0.177"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.177.tgz#b9098a9b0f3714d6604289d176b2a042ddd88ee7"
-  integrity sha512-bZIZyNAJMMqIgbRsBM+nGNDPezaWZMr3p+CKz1JGj4Jn8c7SpvdUqaconpxUG5WEL1WoisBeA3sumo+WXaC9CA==
+"@types/chrome@^0.0.178":
+  version "0.0.178"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.178.tgz#fba7969208cef79ae752dc1138ff05de39f5ffde"
+  integrity sha512-U+G5YG2pH0qvLrYVJ9aT5VbPXYR3fAFyCuRBRAA14Pv7GrkFzDJuXPspgdeLYaKzGEp4rymUkuqUOuFz18LI1g==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
@@ -1122,7 +1122,7 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@*":
+"@typescript-eslint/eslint-plugin@^5.4.0":
   version "5.10.2"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.10.2.tgz#f8c1d59fc37bd6d9d11c97267fdfe722c4777152"
   integrity sha512-4W/9lLuE+v27O/oe7hXJKjNtBLnZE8tQAFpapdxwSVHqtmIoPB1gph3+ahNwVuNL37BX7YQHyGF9Xv6XCnIX2Q==
@@ -1137,7 +1137,7 @@
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/parser@*":
+"@typescript-eslint/parser@^5.4.0":
   version "5.10.2"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.10.2.tgz#b6076d27cc5499ce3f2c625f5ccde946ecb7db9a"
   integrity sha512-JaNYGkaQVhP6HNF+lkdOr2cAs2wdSZBoalE22uYWq8IEv/OVH0RksSGydk+sW8cLoSeYmC+OHvRyv2i4AQ7Czg==
@@ -2737,10 +2737,10 @@ eslint-config-xo-react@^0.26.0:
   resolved "https://registry.yarnpkg.com/eslint-config-xo-react/-/eslint-config-xo-react-0.26.0.tgz#8e3a50fe95b44ecaf832072d0e2a3ac3fc07fab2"
   integrity sha512-vOcDWLrJDvkyprTHEalBwbPk01YH1Y9x3GPR+ZMhBWcIRQCP8wzcAUfsRQ6jXD2mal0Ywt+x0DWGMb+9RpvT5A==
 
-eslint-config-xo-typescript@*:
-  version "0.49.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-xo-typescript/-/eslint-config-xo-typescript-0.49.0.tgz#c7f1e09a298c9912d0366e1397aab1ea82c0ddd6"
-  integrity sha512-a493Ikqk1Ak2tbcVrfAwegvwFnfMbN+G1o6JnCsdQKVgjFQuAXNqJ8X88+01YKNQ8N3bZwFNACcC25+spZI3/g==
+eslint-config-xo-typescript@^0.47.1:
+  version "0.47.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-xo-typescript/-/eslint-config-xo-typescript-0.47.1.tgz#87b5865d8a3428fa26cc8dc3146ef4f712dfed46"
+  integrity sha512-BkbzIltZCWp8QLekKJKG8zJ/ZGezD8Z9FaJ+hJ5PrAVUGkIPmxXLLEHCKS3ax7oOqZLYQiG+jyKfQDIEdTQgbg==
 
 eslint-config-xo@^0.39.0:
   version "0.39.0"
