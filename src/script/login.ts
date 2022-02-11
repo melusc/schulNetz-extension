@@ -69,6 +69,7 @@ export const login = async ({
 		null,
 		XPathResult.FIRST_ORDERED_NODE_TYPE,
 		null,
+		// eslint-disable-next-line @typescript-eslint/ban-types
 	).singleNodeValue as HTMLTableElement | null;
 
 	if (!marksTable) {
