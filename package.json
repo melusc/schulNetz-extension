@@ -62,12 +62,6 @@
 					"@typescript-eslint/naming-convention": "off",
 					"import/extensions": "off"
 				}
-			},
-			{
-				"files": "./*.js",
-				"rules": {
-					"unicorn/prefer-module": "off"
-				}
 			}
 		],
 		"rules": {
