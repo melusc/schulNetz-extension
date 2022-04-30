@@ -17,6 +17,7 @@
 		"eslint-plugin-react-hooks": "^4.4.0",
 		"parcel": "^2.5.0",
 		"prettier": "^2.6.2",
+		"rimraf": "^3.0.2",
 		"typescript": "^4.6.4",
 		"web-ext": "^6.8.0",
 		"xo": "^0.48.0"
@@ -41,8 +42,9 @@
 	},
 	"scripts": {
 		"prebuild": "yarn fmt && yarn test",
-		"build": "del-cli dist/webext-prod && parcel build src/manifest.json --target webext-prod --config @parcel/config-webextension",
+		"build": "rimraf dist/webext-prod && yarn parcel:b",
 		"postbuild": "web-ext lint -s dist/webext-prod",
+		"parcel:b": "parcel build src/manifest.json --target webext-prod --config @parcel/config-webextension",
 		"parcel:w": "parcel watch src/manifest.json --target webext-dev --config @parcel/config-webextension",
 		"start": "concurrently --kill-others \"web-ext run -s dist/webext-dev\" \"yarn:parcel:w\"",
 		"fmt": "prettier -w . && xo --fix",
