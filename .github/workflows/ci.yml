@@ -30,4 +30,7 @@ jobs:
         run: yarn run test
 
       - name: Build
-        run: yarn build
+        run: yarn build-only
+
+      - name: web-ext lint
+        run: yarn web-ext:lint
