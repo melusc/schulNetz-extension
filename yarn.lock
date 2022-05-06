@@ -96,10 +96,10 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@lusc/tsconfig@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@lusc/tsconfig/-/tsconfig-1.0.0.tgz#e169910ef888386ad26acf9389f0c0931d789bdc"
-  integrity sha512-p2AKvylOpbMJy0XrDpsgeV3UByp5KZbd6cmAPGTUR9WLtmhD7IH2h0fhQPw5R0pindNXM3gRyuOZrFcZLICEcw==
+"@lusc/tsconfig@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lusc/tsconfig/-/tsconfig-1.1.0.tgz#09cbb296a6471da5e2c61a7ee486b03b863db385"
+  integrity sha512-Dgzixd358ju5/i/yvXidtR2h3ZxPzIdph4eWHfC/+dlQ3CjyoFu5uGGqPT/NSwFHrzsbx3KcfrygMtPSJ3WBWg==
 
 "@mdn/browser-compat-data@4.1.12":
   version "4.1.12"

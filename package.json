@@ -7,7 +7,7 @@
 	},
 	"description": "",
 	"devDependencies": {
-		"@lusc/tsconfig": "^1.0.0",
+		"@lusc/tsconfig": "^1.1.0",
 		"@parcel/config-webextension": "^2.5.0",
 		"@types/chrome": "^0.0.183",
 		"concurrently": "^7.1.0",
