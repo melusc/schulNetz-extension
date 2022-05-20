@@ -73,10 +73,10 @@ export const NewVersion = () => {
 	}, []);
 
 	return isNewVersionAvailable ? (
-		<div id="new-version">
+		<div id='new-version'>
 			<a
-				href="https://github.com/melusc/schulNetz-extension/releases/latest"
-				rel="noopener noreferrer"
+				href='https://github.com/melusc/schulNetz-extension/releases/latest'
+				rel='noopener noreferrer'
 			>
 				New version available
 			</a>

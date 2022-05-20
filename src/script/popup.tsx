@@ -6,9 +6,9 @@ import Default from './components/default';
 
 const Main = () => (
 	<Router>
-		<Default path="/popup.html" />
-		<Default path="/" />
-		<Settings path="/settings" />
+		<Default path='/popup.html' />
+		<Default path='/' />
+		<Settings path='/settings' />
 	</Router>
 );
 

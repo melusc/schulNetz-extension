@@ -5,9 +5,9 @@ import type {CalculateReturnValueMarks, TableRow} from '..';
 
 const Table = ({rows}: {rows: TableRow[] | undefined}) =>
 	Array.isArray(rows) ? (
-		<div class="table">
-			<div class="thead">
-				<div class="tr">
+		<div class='table'>
+			<div class='thead'>
+				<div class='tr'>
 					<div>Course</div>
 					<div>Mark</div>
 				</div>

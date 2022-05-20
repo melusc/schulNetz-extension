@@ -66,8 +66,8 @@ const Default = (_props: {path: string}) => {
 		<>
 			<div>
 				<button
-					class="btn"
-					type="button"
+					class='btn'
+					type='button'
 					onClick={() => {
 						route('/settings');
 					}}
@@ -80,8 +80,8 @@ const Default = (_props: {path: string}) => {
 			<NewVersion />
 			{stage === Stages.Loading && (
 				<>
-					<div class="loading-outer">
-						<div class="loading-inner" />
+					<div class='loading-outer'>
+						<div class='loading-inner' />
 					</div>
 					<hr />
 				</>
@@ -91,7 +91,7 @@ const Default = (_props: {path: string}) => {
 					<div>You are logged out.</div>
 					<div>
 						{'Login '}
-						<a href="/settings">here</a>.
+						<a href='/settings'>here</a>.
 					</div>
 				</div>
 			)}

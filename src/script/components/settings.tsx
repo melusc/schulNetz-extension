@@ -138,8 +138,8 @@ const Settings = (_props: {path: string}) => {
 	return (
 		<>
 			<button
-				type="button"
-				class="btn"
+				type='button'
+				class='btn'
 				onClick={() => {
 					route('/');
 				}}
@@ -149,43 +149,43 @@ const Settings = (_props: {path: string}) => {
 			<hr />
 
 			<div onKeyDown={handleKeydownSave}>
-				<div class="input-wrapper">
+				<div class='input-wrapper'>
 					<div>Username:</div>
 					<input
-						type="text"
-						placeholder="Username"
+						type='text'
+						placeholder='Username'
 						value={username}
 						onInput={handleInput('username')}
 					/>
 				</div>
 
-				<div class="input-wrapper">
+				<div class='input-wrapper'>
 					<div>Password:</div>
 					<input
-						type="password"
-						placeholder="Password"
+						type='password'
+						placeholder='Password'
 						value={password}
 						onInput={handleInput('password')}
 					/>
 				</div>
 
-				<div class="input-wrapper">
+				<div class='input-wrapper'>
 					<div>URL to schulNetz page</div>
 					<small>ausserschwyz, einsiedeln...</small>
 					<input
-						type="text"
-						placeholder="url"
+						type='text'
+						placeholder='url'
 						value={url}
 						onInput={handleInput('url')}
 					/>
 				</div>
 
-				<div class="input-wrapper">
+				<div class='input-wrapper'>
 					<div>Ignore specific courses</div>
 					<small>seperated by commas</small>
 					<input
-						type="text"
-						placeholder="sport"
+						type='text'
+						placeholder='sport'
 						value={ignoring}
 						onInput={handleInput('ignoring')}
 					/>
@@ -196,13 +196,13 @@ const Settings = (_props: {path: string}) => {
 
 			<hr />
 
-			<div class="input-wrapper">
+			<div class='input-wrapper'>
 				<button
 					class={clsx('btn', {
 						saved: validSaved === true,
 						failed: validSaved === false,
 					})}
-					type="button"
+					type='button'
 					onClick={handleSave}
 					onAnimationEnd={() => {
 						setValidSaved(undefined);
