@@ -10,7 +10,7 @@
 		"@lusc/tsconfig": "^1.1.0",
 		"@parcel/config-webextension": "^2.5.0",
 		"@types/chrome": "^0.0.188",
-		"concurrently": "^7.2.0",
+		"concurrently": "^7.2.1",
 		"env-cmd": "^10.1.0",
 		"eslint-config-xo-react": "^0.27.0",
 		"eslint-plugin-react": "^7.30.0",
