@@ -20,7 +20,7 @@
 		"rimraf": "^3.0.2",
 		"typescript": "^4.7.3",
 		"web-ext": "^7.0.0",
-		"xo": "^0.49.0"
+		"xo": "^0.50.0"
 	},
 	"license": "MIT",
 	"name": "schulnetz_extension",
