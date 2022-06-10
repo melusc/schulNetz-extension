@@ -63,7 +63,8 @@
 				"rules": {
 					"@typescript-eslint/indent": "off",
 					"@typescript-eslint/naming-convention": "off",
-					"import/extensions": "off"
+					"import/extensions": "off",
+					"n/file-extension-in-import": "off"
 				}
 			}
 		],
