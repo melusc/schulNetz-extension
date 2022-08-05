@@ -8,7 +8,7 @@
 	"description": "",
 	"devDependencies": {
 		"@lusc/tsconfig": "^1.2.2",
-		"@parcel/config-webextension": "^2.6.2",
+		"@parcel/config-webextension": "^2.7.0",
 		"@types/chrome": "^0.0.193",
 		"concurrently": "^7.3.0",
 		"env-cmd": "^10.1.0",
