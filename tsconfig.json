@@ -1,3 +1,7 @@
 {
-	"extends": "@lusc/tsconfig"
+	"extends": "@lusc/tsconfig",
+	"include": ["src"],
+	"compilerOptions": {
+		"moduleResolution": "Node"
+	}
 }
