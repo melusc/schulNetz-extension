@@ -2,7 +2,7 @@
 	"author": "",
 	"dependencies": {
 		"clsx": "^1.2.1",
-		"preact": "^10.10.5",
+		"preact": "^10.10.6",
 		"preact-router": "^4.1.0"
 	},
 	"description": "",
