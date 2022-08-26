@@ -1,5 +1,5 @@
 import {h, Fragment} from 'preact';
-import {StateUpdater, useEffect, useState} from 'preact/hooks';
+import {type StateUpdater, useEffect, useState} from 'preact/hooks';
 import {route} from 'preact-router';
 
 import {login, Errors} from '../login';
