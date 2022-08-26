@@ -1,4 +1,4 @@
-import {TableRow, CalculateReturnValue} from './index.d';
+import type {TableRow, CalculateReturnValue} from './index.d';
 import {Stages} from './stages';
 
 let counter = 0;

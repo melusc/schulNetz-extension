@@ -1,4 +1,4 @@
-import {Stages} from './stages';
+import type {Stages} from './stages';
 
 type SettingsState = {
 	username: string;
@@ -56,7 +56,7 @@ type DefaultState =
 	| StageLoggedOut
 	| CalculateReturnValue;
 
-export {
+export type {
 	SettingsState,
 	TableRow,
 	DefaultState,
