@@ -9,7 +9,7 @@
 	"devDependencies": {
 		"@lusc/tsconfig": "^2.0.0",
 		"@parcel/config-webextension": "^2.7.0",
-		"@types/chrome": "^0.0.199",
+		"@types/chrome": "^0.0.200",
 		"concurrently": "^7.5.0",
 		"env-cmd": "^10.1.0",
 		"eslint-config-xo-react": "^0.27.0",
