@@ -1,3 +1,5 @@
+# Archived. Use <https://github.com/melusc/schulnetz> instead
+
 # schulNetz marks summariser
 
 This is a simple extension that summarises your marks and lets you know if you're passing or not.
